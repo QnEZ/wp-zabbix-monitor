@@ -130,7 +130,13 @@ class WPZM_Settings {
         }
 
         if ( isset( $raw['zabbix_server'] ) ) {
-            $current['zabbix_server'] = esc_url_raw( trim( $raw['zabbix_server'] ) );
+            // Strip any URL scheme (https://, http://) and path — Zabbix Sender needs a
+            // plain hostname or IP address, not a URL.
+            $server = trim( $raw['zabbix_server'] );
+            if ( preg_match( '#^https?://([^/]+)#i', $server, $m ) ) {
+                $server = $m[1]; // extract hostname from URL
+            }
+            $current['zabbix_server'] = sanitize_text_field( $server );
         }
 
         if ( isset( $raw['zabbix_port'] ) ) {

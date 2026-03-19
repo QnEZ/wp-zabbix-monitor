@@ -69,7 +69,7 @@ $enabled_metrics = $settings['enabled_metrics'] ?? array_keys( $groups );
                                    value="<?php echo esc_attr( $settings['zabbix_server'] ?? '' ); ?>"
                                    placeholder="zabbix.example.com or 192.168.1.100"
                                    class="regular-text" />
-                            <p class="description"><?php esc_html_e( 'Hostname or IP address of your Zabbix server or proxy.', 'wp-zabbix-monitor' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Hostname or IP address only — e.g. z.qnez.net or 192.168.1.100. Do not include https:// or a path. If you paste a full URL the scheme and path will be stripped automatically.', 'wp-zabbix-monitor' ); ?></p>
                         </td>
                     </tr>
                     <tr>
