@@ -356,6 +356,12 @@ class WPZM_Provisioner {
     /**
      * Make a Zabbix JSON-RPC 2.0 API call.
      *
+     * Zabbix 5.4 and earlier: auth token sent as "auth" field in the JSON body.
+     * Zabbix 6.0+:            auth token sent as "Authorization: Bearer <token>" HTTP header.
+     * Zabbix 7.0+:            the "auth" body field was REMOVED — header-only auth required.
+     *
+     * We detect the server version on first call and use the correct method automatically.
+     *
      * @param string $method     Zabbix API method name
      * @param array  $params     Method parameters
      * @param bool   $with_auth  Whether to include the auth token
@@ -369,16 +375,20 @@ class WPZM_Provisioner {
             'id'      => 1,
         );
 
+        $headers = array(
+            'Content-Type' => 'application/json',
+            'Accept'       => 'application/json',
+        );
+
+        // Zabbix 7.0+ requires auth via Authorization header; older versions used body "auth" field.
+        // We always use the header approach (works on 6.0+ and 7.x) and omit the body field.
         if ( $with_auth && $this->auth_token ) {
-            $payload['auth'] = $this->auth_token;
+            $headers['Authorization'] = 'Bearer ' . $this->auth_token;
         }
 
         $args = array(
             'method'    => 'POST',
-            'headers'   => array(
-                'Content-Type' => 'application/json-rpc',
-                'Accept'       => 'application/json',
-            ),
+            'headers'   => $headers,
             'body'      => wp_json_encode( $payload ),
             'timeout'   => 15,
             'sslverify' => $this->ssl_verify,
