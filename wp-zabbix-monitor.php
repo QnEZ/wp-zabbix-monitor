@@ -6,7 +6,7 @@
  * Version:           1.2.0
  * Requires at least: 5.9
  * Requires PHP:      7.4
- * Author:            Your Name
+ * Author:            QnEZ Servers
  * Author URI:        https://example.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
