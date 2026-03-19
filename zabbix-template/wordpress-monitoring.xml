@@ -2,7 +2,7 @@
 <!--
     WP Zabbix Monitor — Zabbix Template
     Version:  1.0.0
-    Requires: Zabbix 6.0 or later
+    Requires: Zabbix 7.4 or later
 
     This template supports two collection modes:
       1. HTTP Agent (pull): Zabbix polls the WordPress REST API endpoint.
@@ -13,7 +13,7 @@
     Import: Configuration → Templates → Import
 -->
 <zabbix_export>
-    <version>6.0</version>
+    <version>7.4</version>
     <date>2024-01-01T00:00:00Z</date>
 
     <template_groups>
@@ -644,7 +644,7 @@
                 <!-- ─── WooCommerce items ───────────────────────────────────────────────────── -->
 
                 <item>
-                    <uuid>wc01a2b3c4d5e6f7a8b9c0d1e2f3a4b5</uuid>
+                    <uuid>b6a4ca1bccd15355502a35fdda1f7007</uuid>
                     <name>WooCommerce: Orders placed today</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.orders_total_today</key>
@@ -666,7 +666,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc02b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+                    <uuid>6cadb66fe50bb66f6aebd8b2248308b8</uuid>
                     <name>WooCommerce: Orders placed this week</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.orders_total_week</key>
@@ -688,7 +688,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc03c4d5e6f7a8b9c0d1e2f3a4b5c6d7</uuid>
+                    <uuid>f56f09893ff5b917fbfa0ede04cdc416</uuid>
                     <name>WooCommerce: Orders per hour (rolling)</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.orders_per_hour</key>
@@ -710,7 +710,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc04d5e6f7a8b9c0d1e2f3a4b5c6d7e8</uuid>
+                    <uuid>56c95509c4b760ce3fe3315c27b161cb</uuid>
                     <name>WooCommerce: Pending orders</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.orders_pending</key>
@@ -732,7 +732,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc05e6f7a8b9c0d1e2f3a4b5c6d7e8f9</uuid>
+                    <uuid>8ad4c786be7eaa37022b202589b0807a</uuid>
                     <name>WooCommerce: Processing orders</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.orders_processing</key>
@@ -754,7 +754,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc06f7a8b9c0d1e2f3a4b5c6d7e8f9a0</uuid>
+                    <uuid>922dc4acb91871b78ca2e93b16524b0f</uuid>
                     <name>WooCommerce: Failed orders</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.orders_failed</key>
@@ -776,7 +776,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc07a8b9c0d1e2f3a4b5c6d7e8f9a0b1</uuid>
+                    <uuid>e33a72a0e77963758021e0bda0f591e4</uuid>
                     <name>WooCommerce: Revenue today</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.revenue_today</key>
@@ -799,7 +799,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc08b9c0d1e2f3a4b5c6d7e8f9a0b1c2</uuid>
+                    <uuid>b8bda06f2a1c4e26f686438d15036396</uuid>
                     <name>WooCommerce: Revenue this week</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.revenue_week</key>
@@ -822,7 +822,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc09c0d1e2f3a4b5c6d7e8f9a0b1c2d3</uuid>
+                    <uuid>dc08f4f290dea50cbdbe0c4ec067541b</uuid>
                     <name>WooCommerce: Average order value (30 days)</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.revenue_avg_order</key>
@@ -845,7 +845,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc10d1e2f3a4b5c6d7e8f9a0b1c2d3e4</uuid>
+                    <uuid>9cd3876ecf9cfc4f21e80242093d8661</uuid>
                     <name>WooCommerce: Abandoned cart sessions (24h)</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.cart_abandoned_sessions</key>
@@ -867,7 +867,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc11e2f3a4b5c6d7e8f9a0b1c2d3e4f5</uuid>
+                    <uuid>e1f0f9ef838ee87d6e0665aa747822f1</uuid>
                     <name>WooCommerce: Total published products</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.products_total</key>
@@ -889,7 +889,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc12f3a4b5c6d7e8f9a0b1c2d3e4f5a6</uuid>
+                    <uuid>e861bd0e3bfa196f83e7c3651fe70338</uuid>
                     <name>WooCommerce: Products out of stock</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.products_out_of_stock</key>
@@ -911,7 +911,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc13a4b5c6d7e8f9a0b1c2d3e4f5a6b7</uuid>
+                    <uuid>16d4b40388726e46fed785f6cc268da0</uuid>
                     <name>WooCommerce: Products below low-stock threshold</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.products_low_stock</key>
@@ -933,7 +933,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc14b5c6d7e8f9a0b1c2d3e4f5a6b7c8</uuid>
+                    <uuid>84178dbeefa88f0fb708650897486a85</uuid>
                     <name>WooCommerce: Total customers</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.customers_total</key>
@@ -955,7 +955,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc15c6d7e8f9a0b1c2d3e4f5a6b7c8d9</uuid>
+                    <uuid>38c846c7d438171d869dc933b5867c7c</uuid>
                     <name>WooCommerce: New customers today</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.customers_new_today</key>
@@ -977,7 +977,7 @@
                 </item>
 
                 <item>
-                    <uuid>wc16d7e8f9a0b1c2d3e4f5a6b7c8d9e0</uuid>
+                    <uuid>f0387ee2f41a69f823bee2e3b6961a73</uuid>
                     <name>WooCommerce: Pending product reviews</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.reviews_pending</key>
@@ -1004,7 +1004,7 @@
             <triggers>
 
                 <trigger>
-                    <uuid>t1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+                    <uuid>ec795088b275dab98dddf756990357a8</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.ping)=0</expression>
                     <name>WordPress: Site is unreachable</name>
                     <priority>HIGH</priority>
@@ -1015,7 +1015,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>t2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7</uuid>
+                    <uuid>18ba684d12633e97eed919a5f84afcc7</uuid>
                     <expression>avg(/WordPress by WP Zabbix Monitor/wordpress.performance.load_time_ms,5m)>{$WP_LOAD_TIME_HIGH}</expression>
                     <name>WordPress: Page load time is critically high (avg &gt; {$WP_LOAD_TIME_HIGH}ms)</name>
                     <priority>HIGH</priority>
@@ -1026,7 +1026,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>t3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8</uuid>
+                    <uuid>f62447076d666f7bd7a4340c627e8d18</uuid>
                     <expression>avg(/WordPress by WP Zabbix Monitor/wordpress.performance.load_time_ms,5m)>{$WP_LOAD_TIME_WARN}</expression>
                     <name>WordPress: Page load time is elevated (avg &gt; {$WP_LOAD_TIME_WARN}ms)</name>
                     <priority>WARNING</priority>
@@ -1042,7 +1042,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>t4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9</uuid>
+                    <uuid>7be7af363af7175e0a5f2d12cff44e29</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.database.slow_queries)>0</expression>
                     <name>WordPress: Slow database queries detected</name>
                     <priority>WARNING</priority>
@@ -1053,7 +1053,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>t5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0</uuid>
+                    <uuid>ee9be95d94c764624fb274db9f3234fb</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.database.query_count)>{$WP_DB_QUERY_WARN}</expression>
                     <name>WordPress: High database query count (&gt; {$WP_DB_QUERY_WARN} per request)</name>
                     <priority>WARNING</priority>
@@ -1063,7 +1063,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>t6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1</uuid>
+                    <uuid>f1a4931c3c95edd8d6e615df933dbae2</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.server.disk_used_pct)>{$WP_DISK_HIGH}</expression>
                     <name>WordPress: Disk usage is critically high (&gt; {$WP_DISK_HIGH}%)</name>
                     <priority>HIGH</priority>
@@ -1073,7 +1073,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>t7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2</uuid>
+                    <uuid>08f2e26e90d1afd32749a6685d5f42b4</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.server.disk_used_pct)>{$WP_DISK_WARN}</expression>
                     <name>WordPress: Disk usage is elevated (&gt; {$WP_DISK_WARN}%)</name>
                     <priority>WARNING</priority>
@@ -1089,7 +1089,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>t8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3</uuid>
+                    <uuid>b087632c0584e6ca8a9fad047c217e07</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.plugins.needs_update)>={$WP_PLUGIN_UPDATES_WARN}</expression>
                     <name>WordPress: Plugin updates available ({ITEM.LASTVALUE} pending)</name>
                     <priority>INFO</priority>
@@ -1100,7 +1100,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>t9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4</uuid>
+                    <uuid>314c2c8c7d753ba70e9ace1d292d4866</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.cron.overdue_events)>={$WP_OVERDUE_CRON_WARN}</expression>
                     <name>WordPress: Cron events are overdue ({ITEM.LASTVALUE} events)</name>
                     <priority>WARNING</priority>
@@ -1111,7 +1111,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>t10d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5</uuid>
+                    <uuid>a80536e0b61a41bf62f4dce4c81f05df</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.server.wp_debug)=1</expression>
                     <name>WordPress: WP_DEBUG is enabled in production</name>
                     <priority>WARNING</priority>
@@ -1122,7 +1122,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>t11e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6</uuid>
+                    <uuid>cb65181737a145027069062ca6bdf9f9</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.php.opcache_enabled)=0</expression>
                     <name>WordPress: PHP OPcache is disabled</name>
                     <priority>WARNING</priority>
@@ -1135,7 +1135,7 @@
                 <!-- WooCommerce triggers -->
 
                 <trigger>
-                    <uuid>wct1a2b3c4d5e6f7a8b9c0d1e2f3a4b5</uuid>
+                    <uuid>6a7e70af7330bbb124ec910e25254137</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.orders_failed)>{$WP_WC_FAILED_ORDERS_WARN}</expression>
                     <name>WooCommerce: High number of failed orders ({ITEM.LASTVALUE})</name>
                     <priority>WARNING</priority>
@@ -1147,7 +1147,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>wct2b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+                    <uuid>e1db9bd9f5949221815120a2745b545d</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.orders_pending)>{$WP_WC_PENDING_ORDERS_WARN}</expression>
                     <name>WooCommerce: High number of pending orders ({ITEM.LASTVALUE})</name>
                     <priority>WARNING</priority>
@@ -1159,7 +1159,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>wct3c4d5e6f7a8b9c0d1e2f3a4b5c6d7</uuid>
+                    <uuid>8fd4476f6a229c7653f9937159d0bee4</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.products_out_of_stock)>{$WP_WC_OUT_OF_STOCK_WARN}</expression>
                     <name>WooCommerce: Multiple products out of stock ({ITEM.LASTVALUE})</name>
                     <priority>WARNING</priority>
@@ -1171,7 +1171,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>wct4d5e6f7a8b9c0d1e2f3a4b5c6d7e8</uuid>
+                    <uuid>847811e5fbc361d04d618b6ea95d3d1c</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.products_low_stock)>{$WP_WC_LOW_STOCK_WARN}</expression>
                     <name>WooCommerce: Multiple products below low-stock threshold ({ITEM.LASTVALUE})</name>
                     <priority>INFO</priority>
@@ -1183,7 +1183,7 @@
                 </trigger>
 
                 <trigger>
-                    <uuid>wct5e6f7a8b9c0d1e2f3a4b5c6d7e8f9</uuid>
+                    <uuid>492fff2ce81c848c9d6dacb17d3e98ab</uuid>
                     <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.cart_abandoned_sessions)>{$WP_WC_ABANDONED_CARTS_WARN}</expression>
                     <name>WooCommerce: High abandoned cart count ({ITEM.LASTVALUE} sessions)</name>
                     <priority>INFO</priority>
@@ -1200,7 +1200,7 @@
             <graphs>
 
                 <graph>
-                    <uuid>g1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+                    <uuid>88a199ae55b10df2c9bc35037efdfa59</uuid>
                     <name>WordPress: Performance Overview</name>
                     <width>900</width>
                     <height>200</height>
@@ -1221,7 +1221,7 @@
                 </graph>
 
                 <graph>
-                    <uuid>g2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7</uuid>
+                    <uuid>35bae5848ebe348e03aa2ce5c0bbc19b</uuid>
                     <name>WordPress: Database Activity</name>
                     <width>900</width>
                     <height>200</height>
@@ -1248,7 +1248,7 @@
                 </graph>
 
                 <graph>
-                    <uuid>g3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8</uuid>
+                    <uuid>990341e5ef2592e6a7bdbf957c8b1663</uuid>
                     <name>WordPress: User Growth</name>
                     <width>900</width>
                     <height>200</height>
@@ -1269,7 +1269,7 @@
                 </graph>
 
                 <graph>
-                    <uuid>g4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9</uuid>
+                    <uuid>5379055aea1422ad5a0e6104b7d9810a</uuid>
                     <name>WordPress: Disk Usage</name>
                     <width>900</width>
                     <height>200</height>
@@ -1290,7 +1290,7 @@
                 </graph>
 
                 <graph>
-                    <uuid>g5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0</uuid>
+                    <uuid>2bdaa53aa22ba929704b07b4ab3aeda1</uuid>
                     <name>WordPress: OPcache Hit Rate</name>
                     <width>900</width>
                     <height>200</height>
@@ -1305,7 +1305,7 @@
                 </graph>
 
                 <graph>
-                    <uuid>g6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1</uuid>
+                    <uuid>68ff5e85f02617d8894f0f1bf18decc1</uuid>
                     <name>WordPress: Database Size Growth</name>
                     <width>900</width>
                     <height>200</height>
@@ -1327,7 +1327,7 @@
 
                 <!-- WooCommerce Sales graph -->
                 <graph>
-                    <uuid>wcg1a2b3c4d5e6f7a8b9c0d1e2f3a4b5</uuid>
+                    <uuid>d85d17b4ff23c50e09192a4e87e0fdc2</uuid>
                     <name>WooCommerce: Sales Overview</name>
                     <width>900</width>
                     <height>200</height>
@@ -1355,7 +1355,7 @@
 
                 <!-- WooCommerce Inventory graph -->
                 <graph>
-                    <uuid>wcg2b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+                    <uuid>63c544cee3e782b42aa856e82cf5b5b0</uuid>
                     <name>WooCommerce: Inventory Status</name>
                     <width>900</width>
                     <height>200</height>
@@ -1386,10 +1386,8 @@
             <!-- ─── Dashboard ────────────────────────────────────────────────── -->
             <dashboards>
                 <dashboard>
-                    <uuid>dash1a2b3c4d5e6f7a8b9c0d1e2f3a4b5</uuid>
+                    <uuid>8b224a7963f834552c40ef007b5b8034</uuid>
                     <name>WordPress Overview</name>
-                    <display_period>30</display_period>
-                    <auto_start>YES</auto_start>
                     <pages>
                         <page>
                             <name>Overview</name>
@@ -1440,19 +1438,21 @@
                 </dashboard>
             </dashboards>
 
-        </template>
-    </templates>
 
-    <!-- ─── Value maps ──────────────────────────────────────────────────────── -->
-    <value_maps>
+            <!-- ─── Value maps ──────────────────────────────────────────────── -->
+            <valuemaps>
         <value_map>
-            <uuid>vm1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+            <uuid>5819063a19fdc92d5b99927076b5c0bd</uuid>
             <name>Service state</name>
             <mappings>
                 <mapping><value>0</value><newvalue>Down</newvalue></mapping>
                 <mapping><value>1</value><newvalue>Up</newvalue></mapping>
             </mappings>
         </value_map>
-    </value_maps>
+                </valuemaps>
+
+        </template>
+    </templates>
+
 
 </zabbix_export>
