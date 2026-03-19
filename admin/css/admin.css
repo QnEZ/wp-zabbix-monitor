@@ -1,0 +1,326 @@
+/* WP Zabbix Monitor — Admin Styles */
+
+/* ── Page layout ─────────────────────────────────────────────────────────── */
+.wpzm-wrap {
+    max-width: 960px;
+}
+
+.wpzm-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #dcdcde;
+}
+
+.wpzm-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.wpzm-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #1d2327;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* ── Tabs ────────────────────────────────────────────────────────────────── */
+.wpzm-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid #dcdcde;
+    margin-bottom: 24px;
+}
+
+.wpzm-tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #50575e;
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.wpzm-tab:hover,
+.wpzm-tab.active {
+    color: #2271b1;
+    border-bottom-color: #2271b1;
+}
+
+.wpzm-tab-content {
+    display: none;
+}
+
+.wpzm-tab-content.active {
+    display: block;
+}
+
+/* ── Cards ───────────────────────────────────────────────────────────────── */
+.wpzm-card {
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+
+.wpzm-card h2 {
+    margin: 0 0 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1d2327;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wpzm-card h2 .dashicons {
+    color: #2271b1;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+/* ── Form table overrides ────────────────────────────────────────────────── */
+.wpzm-form-table th {
+    width: 220px;
+    padding: 12px 10px 12px 0;
+    font-weight: 500;
+}
+
+.wpzm-form-table td {
+    padding: 10px 0;
+}
+
+.wpzm-form-table input[type="text"],
+.wpzm-form-table input[type="number"],
+.wpzm-form-table input[type="url"],
+.wpzm-form-table textarea,
+.wpzm-form-table select {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* ── Token field ─────────────────────────────────────────────────────────── */
+.wpzm-token-wrap {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    max-width: 500px;
+}
+
+.wpzm-token-wrap input {
+    flex: 1;
+    font-family: monospace;
+    font-size: 13px;
+    background: #f6f7f7;
+}
+
+/* ── Status badges ───────────────────────────────────────────────────────── */
+.wpzm-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.wpzm-status.ok {
+    background: #edfaef;
+    color: #1a7e2e;
+}
+
+.wpzm-status.warning {
+    background: #fcf9e8;
+    color: #8a6d00;
+}
+
+.wpzm-status.error {
+    background: #fce8e8;
+    color: #8a1a1a;
+}
+
+.wpzm-status::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    display: inline-block;
+}
+
+/* ── Metrics grid ────────────────────────────────────────────────────────── */
+.wpzm-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.wpzm-metric-card {
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 14px 16px;
+    text-align: center;
+}
+
+.wpzm-metric-card .wpzm-metric-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #646970;
+    margin-bottom: 6px;
+}
+
+.wpzm-metric-card .wpzm-metric-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1d2327;
+    font-variant-numeric: tabular-nums;
+}
+
+.wpzm-metric-card .wpzm-metric-unit {
+    font-size: 12px;
+    color: #646970;
+    margin-left: 2px;
+}
+
+/* ── Endpoint display ────────────────────────────────────────────────────── */
+.wpzm-endpoint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-family: monospace;
+    font-size: 13px;
+    margin-bottom: 8px;
+    word-break: break-all;
+}
+
+.wpzm-endpoint .wpzm-copy-btn {
+    flex-shrink: 0;
+    cursor: pointer;
+    color: #2271b1;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 16px;
+}
+
+/* ── Action bar ──────────────────────────────────────────────────────────── */
+.wpzm-action-bar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+/* ── Push result ─────────────────────────────────────────────────────────── */
+#wpzm-push-result {
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    display: none;
+}
+
+#wpzm-push-result.success {
+    background: #edfaef;
+    color: #1a7e2e;
+    border: 1px solid #a7e8b3;
+    display: block;
+}
+
+#wpzm-push-result.error {
+    background: #fce8e8;
+    color: #8a1a1a;
+    border: 1px solid #f5b3b3;
+    display: block;
+}
+
+/* ── Dashboard widget ────────────────────────────────────────────────────── */
+#wpzm_dashboard_widget .wpzm-widget-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+#wpzm_dashboard_widget .wpzm-widget-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f0f1;
+    font-size: 13px;
+}
+
+#wpzm_dashboard_widget .wpzm-widget-item:last-child {
+    border-bottom: none;
+}
+
+#wpzm_dashboard_widget .wpzm-widget-value {
+    font-weight: 600;
+    color: #1d2327;
+    font-variant-numeric: tabular-nums;
+}
+
+#wpzm_dashboard_widget .wpzm-widget-footer {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f1;
+    font-size: 12px;
+    color: #646970;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ── Checkbox group ──────────────────────────────────────────────────────── */
+.wpzm-checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+}
+
+.wpzm-checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* ── Spinner ─────────────────────────────────────────────────────────────── */
+.wpzm-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #c3c4c7;
+    border-top-color: #2271b1;
+    border-radius: 50%;
+    animation: wpzm-spin 0.6s linear infinite;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+@keyframes wpzm-spin {
+    to { transform: rotate(360deg); }
+}

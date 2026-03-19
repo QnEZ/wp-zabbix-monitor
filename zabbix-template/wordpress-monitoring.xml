@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    WP Zabbix Monitor — Zabbix Template
+    Version:  1.0.0
+    Requires: Zabbix 6.0 or later
+
+    This template supports two collection modes:
+      1. HTTP Agent (pull): Zabbix polls the WordPress REST API endpoint.
+         Configure {$WP_URL} and {$WP_API_TOKEN} macros on the host.
+      2. Zabbix Trapper (push): WordPress pushes data via the Zabbix Sender protocol.
+         Enable "Push Metrics" in the plugin settings.
+
+    Import: Configuration → Templates → Import
+-->
+<zabbix_export>
+    <version>6.0</version>
+    <date>2024-01-01T00:00:00Z</date>
+
+    <template_groups>
+        <template_group>
+            <uuid>a571c0d144b14fd4a87a9d9b2aa9fcd6</uuid>
+            <name>WordPress</name>
+        </template_group>
+    </template_groups>
+
+    <templates>
+        <template>
+            <uuid>7e5a4e1b3c2d4f6a8b0c2e4f6a8b0c2e</uuid>
+            <template>WordPress by WP Zabbix Monitor</template>
+            <name>WordPress by WP Zabbix Monitor</name>
+            <description>
+                Monitors a WordPress installation via the WP Zabbix Monitor plugin.
+                Supports both HTTP Agent (pull) and Zabbix Sender (push) modes.
+
+                Required host macros:
+                  {$WP_URL}       — WordPress site URL, e.g. https://example.com
+                  {$WP_API_TOKEN} — API token from the plugin settings page
+            </description>
+            <groups>
+                <group>
+                    <name>WordPress</name>
+                </group>
+            </groups>
+
+            <!-- ─── Macros ──────────────────────────────────────────────────── -->
+            <macros>
+                <macro>
+                    <macro>{$WP_URL}</macro>
+                    <value>https://example.com</value>
+                    <description>WordPress site URL (no trailing slash)</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_API_TOKEN}</macro>
+                    <value></value>
+                    <type>SECRET_TEXT</type>
+                    <description>API token from WP Zabbix Monitor plugin settings</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_LOAD_TIME_WARN}</macro>
+                    <value>1000</value>
+                    <description>Page load time warning threshold (ms)</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_LOAD_TIME_HIGH}</macro>
+                    <value>3000</value>
+                    <description>Page load time critical threshold (ms)</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_MEMORY_WARN}</macro>
+                    <value>80</value>
+                    <description>Memory usage warning threshold (% of limit)</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_DB_QUERY_WARN}</macro>
+                    <value>100</value>
+                    <description>DB query count warning threshold per request</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_DISK_WARN}</macro>
+                    <value>80</value>
+                    <description>Disk usage warning threshold (%)</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_DISK_HIGH}</macro>
+                    <value>90</value>
+                    <description>Disk usage critical threshold (%)</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_PLUGIN_UPDATES_WARN}</macro>
+                    <value>1</value>
+                    <description>Trigger when this many plugin updates are available</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_OVERDUE_CRON_WARN}</macro>
+                    <value>3</value>
+                    <description>Trigger when this many cron events are overdue</description>
+                </macro>
+            </macros>
+
+            <!-- ─── Items ───────────────────────────────────────────────────── -->
+            <items>
+
+                <!-- Master item: fetch full JSON payload -->
+                <item>
+                    <uuid>a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6</uuid>
+                    <name>WordPress: Raw metrics JSON</name>
+                    <type>HTTP_AGENT</type>
+                    <key>wordpress.metrics.raw</key>
+                    <delay>60s</delay>
+                    <history>1h</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <url>{$WP_URL}/wp-json/wpzm/v1/metrics</url>
+                    <headers>
+                        <header>
+                            <name>Authorization</name>
+                            <value>Bearer {$WP_API_TOKEN}</value>
+                        </header>
+                    </headers>
+                    <status_codes>200</status_codes>
+                    <follow_redirects>YES</follow_redirects>
+                    <retrieve_mode>BODY</retrieve_mode>
+                    <description>Master HTTP Agent item. All other items depend on this via JSONPath preprocessing.</description>
+                    <tags>
+                        <tag><tag>component</tag><value>wordpress</value></tag>
+                        <tag><tag>group</tag><value>master</value></tag>
+                    </tags>
+                </item>
+
+                <!-- Ping / availability -->
+                <item>
+                    <uuid>b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6</uuid>
+                    <name>WordPress: Site availability</name>
+                    <type>HTTP_AGENT</type>
+                    <key>wordpress.ping</key>
+                    <delay>30s</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <url>{$WP_URL}/wp-json/wpzm/v1/ping</url>
+                    <status_codes>200</status_codes>
+                    <follow_redirects>YES</follow_redirects>
+                    <retrieve_mode>BODY</retrieve_mode>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.timestamp</parameter>
+                            </parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                        <step>
+                            <type>BOOL_TO_DECIMAL</type>
+                            <parameters><parameter/></parameters>
+                        </step>
+                    </preprocessing>
+                    <valuemap>
+                        <name>Service state</name>
+                    </valuemap>
+                    <description>1 = site is reachable and plugin is active, 0 = unreachable.</description>
+                    <tags>
+                        <tag><tag>component</tag><value>availability</value></tag>
+                    </tags>
+                </item>
+
+                <!-- ── Performance ──────────────────────────────────────────── -->
+                <item>
+                    <uuid>c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6</uuid>
+                    <name>WordPress: Page load time</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.performance.load_time_ms</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>ms</units>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.performance.load_time_ms</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>performance</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6</uuid>
+                    <name>WordPress: PHP memory usage</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.performance.memory_usage_mb</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>MB</units>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.performance.memory_usage_mb</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>performance</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6</uuid>
+                    <name>WordPress: PHP peak memory usage</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.performance.memory_peak_mb</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>MB</units>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.performance.memory_peak_mb</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>performance</value></tag>
+                    </tags>
+                </item>
+
+                <!-- ── Database ─────────────────────────────────────────────── -->
+                <item>
+                    <uuid>f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+                    <name>WordPress: Database query count</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.database.query_count</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.database.query_count</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>database</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7</uuid>
+                    <name>WordPress: Database query time</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.database.query_time_ms</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>ms</units>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.database.query_time_ms</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>database</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7</uuid>
+                    <name>WordPress: Slow database queries</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.database.slow_queries</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.database.slow_queries</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>database</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7</uuid>
+                    <name>WordPress: Database size</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.database.db_size_mb</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>MB</units>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.database.db_size_mb</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>database</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7</uuid>
+                    <name>WordPress: Autoload options size</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.database.autoload_size_kb</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>KB</units>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.database.autoload_size_kb</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>database</value></tag>
+                    </tags>
+                </item>
+
+                <!-- ── Users ────────────────────────────────────────────────── -->
+                <item>
+                    <uuid>e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7</uuid>
+                    <name>WordPress: Total registered users</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.users.total</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.users.total</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>users</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7</uuid>
+                    <name>WordPress: New users (last 24h)</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.users.new_24h</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.users.new_24h</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>users</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8</uuid>
+                    <name>WordPress: Administrator count</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.users.admin_count</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.users.admin_count</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>users</value></tag>
+                    </tags>
+                </item>
+
+                <!-- ── Content ──────────────────────────────────────────────── -->
+                <item>
+                    <uuid>b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8</uuid>
+                    <name>WordPress: Published posts</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.content.published_posts</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.content.published_posts</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>content</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8</uuid>
+                    <name>WordPress: Pending comments</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.content.comments_pending</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.content.comments_pending</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>content</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8</uuid>
+                    <name>WordPress: Spam comments</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.content.comments_spam</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.content.comments_spam</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>content</value></tag>
+                    </tags>
+                </item>
+
+                <!-- ── Plugins ──────────────────────────────────────────────── -->
+                <item>
+                    <uuid>e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8</uuid>
+                    <name>WordPress: Active plugins</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.plugins.active</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.plugins.active</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>plugins</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8</uuid>
+                    <name>WordPress: Plugin updates available</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.plugins.needs_update</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.plugins.needs_update</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>plugins</value></tag>
+                    </tags>
+                </item>
+
+                <!-- ── PHP ──────────────────────────────────────────────────── -->
+                <item>
+                    <uuid>a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9</uuid>
+                    <name>WordPress: OPcache hit rate</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.php.opcache_hit_rate</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.php.opcache_hit_rate</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>php</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9</uuid>
+                    <name>WordPress: OPcache enabled</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.php.opcache_enabled</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.php.opcache_enabled</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>php</value></tag>
+                    </tags>
+                </item>
+
+                <!-- ── Server ───────────────────────────────────────────────── -->
+                <item>
+                    <uuid>c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9</uuid>
+                    <name>WordPress: Disk used percentage</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.server.disk_used_pct</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.server.disk_used_pct</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>server</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9</uuid>
+                    <name>WordPress: Disk free space</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.server.disk_free_gb</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>GB</units>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.server.disk_free_gb</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>server</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9</uuid>
+                    <name>WordPress: WP_DEBUG enabled</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.server.wp_debug</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.server.wp_debug</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>server</value></tag>
+                    </tags>
+                </item>
+
+                <!-- ── Cron ─────────────────────────────────────────────────── -->
+                <item>
+                    <uuid>f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9</uuid>
+                    <name>WordPress: Overdue cron events</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.cron.overdue_events</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.cron.overdue_events</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>cron</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0</uuid>
+                    <name>WordPress: Total cron events</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.cron.total_events</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.cron.total_events</parameter></parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>cron</value></tag>
+                    </tags>
+                </item>
+
+            </items>
+
+            <!-- ─── Triggers ────────────────────────────────────────────────── -->
+            <triggers>
+
+                <trigger>
+                    <uuid>t1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.ping)=0</expression>
+                    <name>WordPress: Site is unreachable</name>
+                    <priority>HIGH</priority>
+                    <description>The WordPress REST API ping endpoint returned an error or the site is down.</description>
+                    <tags>
+                        <tag><tag>scope</tag><value>availability</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>t2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7</uuid>
+                    <expression>avg(/WordPress by WP Zabbix Monitor/wordpress.performance.load_time_ms,5m)>{$WP_LOAD_TIME_HIGH}</expression>
+                    <name>WordPress: Page load time is critically high (avg &gt; {$WP_LOAD_TIME_HIGH}ms)</name>
+                    <priority>HIGH</priority>
+                    <description>Average page load time over 5 minutes exceeds the critical threshold.</description>
+                    <tags>
+                        <tag><tag>scope</tag><value>performance</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>t3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8</uuid>
+                    <expression>avg(/WordPress by WP Zabbix Monitor/wordpress.performance.load_time_ms,5m)>{$WP_LOAD_TIME_WARN}</expression>
+                    <name>WordPress: Page load time is elevated (avg &gt; {$WP_LOAD_TIME_WARN}ms)</name>
+                    <priority>WARNING</priority>
+                    <dependencies>
+                        <dependency>
+                            <name>WordPress: Page load time is critically high (avg &gt; {$WP_LOAD_TIME_HIGH}ms)</name>
+                            <expression>avg(/WordPress by WP Zabbix Monitor/wordpress.performance.load_time_ms,5m)>{$WP_LOAD_TIME_HIGH}</expression>
+                        </dependency>
+                    </dependencies>
+                    <tags>
+                        <tag><tag>scope</tag><value>performance</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>t4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.database.slow_queries)>0</expression>
+                    <name>WordPress: Slow database queries detected</name>
+                    <priority>WARNING</priority>
+                    <description>One or more database queries exceeded 50ms on the last page load.</description>
+                    <tags>
+                        <tag><tag>scope</tag><value>database</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>t5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.database.query_count)>{$WP_DB_QUERY_WARN}</expression>
+                    <name>WordPress: High database query count (&gt; {$WP_DB_QUERY_WARN} per request)</name>
+                    <priority>WARNING</priority>
+                    <tags>
+                        <tag><tag>scope</tag><value>database</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>t6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.server.disk_used_pct)>{$WP_DISK_HIGH}</expression>
+                    <name>WordPress: Disk usage is critically high (&gt; {$WP_DISK_HIGH}%)</name>
+                    <priority>HIGH</priority>
+                    <tags>
+                        <tag><tag>scope</tag><value>server</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>t7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.server.disk_used_pct)>{$WP_DISK_WARN}</expression>
+                    <name>WordPress: Disk usage is elevated (&gt; {$WP_DISK_WARN}%)</name>
+                    <priority>WARNING</priority>
+                    <dependencies>
+                        <dependency>
+                            <name>WordPress: Disk usage is critically high (&gt; {$WP_DISK_HIGH}%)</name>
+                            <expression>last(/WordPress by WP Zabbix Monitor/wordpress.server.disk_used_pct)>{$WP_DISK_HIGH}</expression>
+                        </dependency>
+                    </dependencies>
+                    <tags>
+                        <tag><tag>scope</tag><value>server</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>t8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.plugins.needs_update)>={$WP_PLUGIN_UPDATES_WARN}</expression>
+                    <name>WordPress: Plugin updates available ({ITEM.LASTVALUE} pending)</name>
+                    <priority>INFO</priority>
+                    <description>One or more plugins have updates available. Update promptly to maintain security.</description>
+                    <tags>
+                        <tag><tag>scope</tag><value>plugins</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>t9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.cron.overdue_events)>={$WP_OVERDUE_CRON_WARN}</expression>
+                    <name>WordPress: Cron events are overdue ({ITEM.LASTVALUE} events)</name>
+                    <priority>WARNING</priority>
+                    <description>WP-Cron has overdue events. This may indicate the cron system is not running correctly.</description>
+                    <tags>
+                        <tag><tag>scope</tag><value>cron</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>t10d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.server.wp_debug)=1</expression>
+                    <name>WordPress: WP_DEBUG is enabled in production</name>
+                    <priority>WARNING</priority>
+                    <description>WP_DEBUG is enabled. This should be disabled on production sites to prevent information disclosure.</description>
+                    <tags>
+                        <tag><tag>scope</tag><value>security</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>t11e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.php.opcache_enabled)=0</expression>
+                    <name>WordPress: PHP OPcache is disabled</name>
+                    <priority>WARNING</priority>
+                    <description>OPcache is not enabled. Enabling OPcache significantly improves WordPress performance.</description>
+                    <tags>
+                        <tag><tag>scope</tag><value>performance</value></tag>
+                    </tags>
+                </trigger>
+
+            </triggers>
+
+            <!-- ─── Graphs ──────────────────────────────────────────────────── -->
+            <graphs>
+
+                <graph>
+                    <uuid>g1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+                    <name>WordPress: Performance Overview</name>
+                    <width>900</width>
+                    <height>200</height>
+                    <graph_items>
+                        <graph_item>
+                            <color>00D4FF</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.performance.load_time_ms</key></item>
+                            <yaxisside>LEFT</yaxisside>
+                            <drawtype>GRADIENT_LINE</drawtype>
+                        </graph_item>
+                        <graph_item>
+                            <color>7C3AED</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.performance.memory_usage_mb</key></item>
+                            <yaxisside>RIGHT</yaxisside>
+                            <drawtype>LINE</drawtype>
+                        </graph_item>
+                    </graph_items>
+                </graph>
+
+                <graph>
+                    <uuid>g2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7</uuid>
+                    <name>WordPress: Database Activity</name>
+                    <width>900</width>
+                    <height>200</height>
+                    <graph_items>
+                        <graph_item>
+                            <color>7C3AED</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.database.query_count</key></item>
+                            <yaxisside>LEFT</yaxisside>
+                            <drawtype>GRADIENT_LINE</drawtype>
+                        </graph_item>
+                        <graph_item>
+                            <color>F59E0B</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.database.query_time_ms</key></item>
+                            <yaxisside>RIGHT</yaxisside>
+                            <drawtype>LINE</drawtype>
+                        </graph_item>
+                        <graph_item>
+                            <color>EF4444</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.database.slow_queries</key></item>
+                            <yaxisside>LEFT</yaxisside>
+                            <drawtype>BOLD_LINE</drawtype>
+                        </graph_item>
+                    </graph_items>
+                </graph>
+
+                <graph>
+                    <uuid>g3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8</uuid>
+                    <name>WordPress: User Growth</name>
+                    <width>900</width>
+                    <height>200</height>
+                    <graph_items>
+                        <graph_item>
+                            <color>00D4FF</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.users.total</key></item>
+                            <yaxisside>LEFT</yaxisside>
+                            <drawtype>GRADIENT_LINE</drawtype>
+                        </graph_item>
+                        <graph_item>
+                            <color>10B981</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.users.new_24h</key></item>
+                            <yaxisside>RIGHT</yaxisside>
+                            <drawtype>BOLD_LINE</drawtype>
+                        </graph_item>
+                    </graph_items>
+                </graph>
+
+                <graph>
+                    <uuid>g4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9</uuid>
+                    <name>WordPress: Disk Usage</name>
+                    <width>900</width>
+                    <height>200</height>
+                    <graph_items>
+                        <graph_item>
+                            <color>F59E0B</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.server.disk_used_pct</key></item>
+                            <yaxisside>LEFT</yaxisside>
+                            <drawtype>GRADIENT_LINE</drawtype>
+                        </graph_item>
+                        <graph_item>
+                            <color>10B981</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.server.disk_free_gb</key></item>
+                            <yaxisside>RIGHT</yaxisside>
+                            <drawtype>LINE</drawtype>
+                        </graph_item>
+                    </graph_items>
+                </graph>
+
+                <graph>
+                    <uuid>g5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0</uuid>
+                    <name>WordPress: OPcache Hit Rate</name>
+                    <width>900</width>
+                    <height>200</height>
+                    <graph_items>
+                        <graph_item>
+                            <color>10B981</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.php.opcache_hit_rate</key></item>
+                            <yaxisside>LEFT</yaxisside>
+                            <drawtype>GRADIENT_LINE</drawtype>
+                        </graph_item>
+                    </graph_items>
+                </graph>
+
+                <graph>
+                    <uuid>g6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1</uuid>
+                    <name>WordPress: Database Size Growth</name>
+                    <width>900</width>
+                    <height>200</height>
+                    <graph_items>
+                        <graph_item>
+                            <color>7C3AED</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.database.db_size_mb</key></item>
+                            <yaxisside>LEFT</yaxisside>
+                            <drawtype>GRADIENT_LINE</drawtype>
+                        </graph_item>
+                        <graph_item>
+                            <color>F59E0B</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.database.autoload_size_kb</key></item>
+                            <yaxisside>RIGHT</yaxisside>
+                            <drawtype>LINE</drawtype>
+                        </graph_item>
+                    </graph_items>
+                </graph>
+
+            </graphs>
+
+            <!-- ─── Dashboard ────────────────────────────────────────────────── -->
+            <dashboards>
+                <dashboard>
+                    <uuid>dash1a2b3c4d5e6f7a8b9c0d1e2f3a4b5</uuid>
+                    <name>WordPress Overview</name>
+                    <display_period>30</display_period>
+                    <auto_start>YES</auto_start>
+                    <pages>
+                        <page>
+                            <name>Overview</name>
+                            <widgets>
+                                <widget>
+                                    <type>GRAPH_CLASSIC</type>
+                                    <name>Performance</name>
+                                    <x>0</x><y>0</y><width>12</width><height>5</height>
+                                    <fields>
+                                        <field><type>GRAPH</type><name>graphid</name>
+                                            <value><host>WordPress by WP Zabbix Monitor</host><name>WordPress: Performance Overview</name></value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                                <widget>
+                                    <type>GRAPH_CLASSIC</type>
+                                    <name>Database Activity</name>
+                                    <x>12</x><y>0</y><width>12</width><height>5</height>
+                                    <fields>
+                                        <field><type>GRAPH</type><name>graphid</name>
+                                            <value><host>WordPress by WP Zabbix Monitor</host><name>WordPress: Database Activity</name></value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                                <widget>
+                                    <type>GRAPH_CLASSIC</type>
+                                    <name>User Growth</name>
+                                    <x>0</x><y>5</y><width>12</width><height>5</height>
+                                    <fields>
+                                        <field><type>GRAPH</type><name>graphid</name>
+                                            <value><host>WordPress by WP Zabbix Monitor</host><name>WordPress: User Growth</name></value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                                <widget>
+                                    <type>GRAPH_CLASSIC</type>
+                                    <name>Disk Usage</name>
+                                    <x>12</x><y>5</y><width>12</width><height>5</height>
+                                    <fields>
+                                        <field><type>GRAPH</type><name>graphid</name>
+                                            <value><host>WordPress by WP Zabbix Monitor</host><name>WordPress: Disk Usage</name></value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                            </widgets>
+                        </page>
+                    </pages>
+                </dashboard>
+            </dashboards>
+
+        </template>
+    </templates>
+
+    <!-- ─── Value maps ──────────────────────────────────────────────────────── -->
+    <value_maps>
+        <value_map>
+            <uuid>vm1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+            <name>Service state</name>
+            <mappings>
+                <mapping><value>0</value><newvalue>Down</newvalue></mapping>
+                <mapping><value>1</value><newvalue>Up</newvalue></mapping>
+            </mappings>
+        </value_map>
+    </value_maps>
+
+</zabbix_export>
