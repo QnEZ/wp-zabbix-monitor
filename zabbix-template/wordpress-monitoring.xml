@@ -95,6 +95,31 @@
                     <value>3</value>
                     <description>Trigger when this many cron events are overdue</description>
                 </macro>
+                <macro>
+                    <macro>{$WP_WC_FAILED_ORDERS_WARN}</macro>
+                    <value>5</value>
+                    <description>WooCommerce: trigger when failed orders exceed this count</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_WC_PENDING_ORDERS_WARN}</macro>
+                    <value>20</value>
+                    <description>WooCommerce: trigger when pending orders exceed this count</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_WC_OUT_OF_STOCK_WARN}</macro>
+                    <value>5</value>
+                    <description>WooCommerce: trigger when out-of-stock products exceed this count</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_WC_LOW_STOCK_WARN}</macro>
+                    <value>3</value>
+                    <description>WooCommerce: trigger when low-stock products exceed this count</description>
+                </macro>
+                <macro>
+                    <macro>{$WP_WC_ABANDONED_CARTS_WARN}</macro>
+                    <value>50</value>
+                    <description>WooCommerce: trigger when abandoned cart sessions exceed this count</description>
+                </macro>
             </macros>
 
             <!-- ─── Items ───────────────────────────────────────────────────── -->
@@ -616,6 +641,363 @@
                     </tags>
                 </item>
 
+                <!-- ─── WooCommerce items ───────────────────────────────────────────────────── -->
+
+                <item>
+                    <uuid>wc01a2b3c4d5e6f7a8b9c0d1e2f3a4b5</uuid>
+                    <name>WooCommerce: Orders placed today</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.orders_total_today</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.orders_total_today</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>orders</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc02b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+                    <name>WooCommerce: Orders placed this week</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.orders_total_week</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.orders_total_week</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>orders</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc03c4d5e6f7a8b9c0d1e2f3a4b5c6d7</uuid>
+                    <name>WooCommerce: Orders per hour (rolling)</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.orders_per_hour</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.orders_per_hour</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>orders</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc04d5e6f7a8b9c0d1e2f3a4b5c6d7e8</uuid>
+                    <name>WooCommerce: Pending orders</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.orders_pending</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.orders_pending</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>orders</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc05e6f7a8b9c0d1e2f3a4b5c6d7e8f9</uuid>
+                    <name>WooCommerce: Processing orders</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.orders_processing</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.orders_processing</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>orders</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc06f7a8b9c0d1e2f3a4b5c6d7e8f9a0</uuid>
+                    <name>WooCommerce: Failed orders</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.orders_failed</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.orders_failed</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>orders</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc07a8b9c0d1e2f3a4b5c6d7e8f9a0b1</uuid>
+                    <name>WooCommerce: Revenue today</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.revenue_today</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>$</units>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.revenue_today</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>revenue</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc08b9c0d1e2f3a4b5c6d7e8f9a0b1c2</uuid>
+                    <name>WooCommerce: Revenue this week</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.revenue_week</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>$</units>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.revenue_week</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>revenue</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc09c0d1e2f3a4b5c6d7e8f9a0b1c2d3</uuid>
+                    <name>WooCommerce: Average order value (30 days)</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.revenue_avg_order</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>$</units>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.revenue_avg_order</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>revenue</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc10d1e2f3a4b5c6d7e8f9a0b1c2d3e4</uuid>
+                    <name>WooCommerce: Abandoned cart sessions (24h)</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.cart_abandoned_sessions</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.cart_abandoned_sessions</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>cart</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc11e2f3a4b5c6d7e8f9a0b1c2d3e4f5</uuid>
+                    <name>WooCommerce: Total published products</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.products_total</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.products_total</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>products</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc12f3a4b5c6d7e8f9a0b1c2d3e4f5a6</uuid>
+                    <name>WooCommerce: Products out of stock</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.products_out_of_stock</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.products_out_of_stock</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>products</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc13a4b5c6d7e8f9a0b1c2d3e4f5a6b7</uuid>
+                    <name>WooCommerce: Products below low-stock threshold</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.products_low_stock</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.products_low_stock</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>products</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc14b5c6d7e8f9a0b1c2d3e4f5a6b7c8</uuid>
+                    <name>WooCommerce: Total customers</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.customers_total</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.customers_total</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>customers</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc15c6d7e8f9a0b1c2d3e4f5a6b7c8d9</uuid>
+                    <name>WooCommerce: New customers today</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.customers_new_today</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.customers_new_today</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>customers</value></tag>
+                    </tags>
+                </item>
+
+                <item>
+                    <uuid>wc16d7e8f9a0b1c2d3e4f5a6b7c8d9e0</uuid>
+                    <name>WooCommerce: Pending product reviews</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.woocommerce.reviews_pending</key>
+                    <delay>0</delay>
+                    <value_type>UNSIGNED</value_type>
+                    <master_item><key>wordpress.metrics.raw</key></master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters><parameter>$.woocommerce.reviews_pending</parameter></parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                            <error_handler_params>0</error_handler_params>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag><tag>component</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>reviews</value></tag>
+                    </tags>
+                </item>
+
             </items>
 
             <!-- ─── Triggers ────────────────────────────────────────────────── -->
@@ -750,6 +1132,68 @@
                     </tags>
                 </trigger>
 
+                <!-- WooCommerce triggers -->
+
+                <trigger>
+                    <uuid>wct1a2b3c4d5e6f7a8b9c0d1e2f3a4b5</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.orders_failed)>{$WP_WC_FAILED_ORDERS_WARN}</expression>
+                    <name>WooCommerce: High number of failed orders ({ITEM.LASTVALUE})</name>
+                    <priority>WARNING</priority>
+                    <description>The number of failed orders has exceeded the warning threshold. This may indicate a payment gateway issue.</description>
+                    <tags>
+                        <tag><tag>scope</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>orders</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>wct2b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.orders_pending)>{$WP_WC_PENDING_ORDERS_WARN}</expression>
+                    <name>WooCommerce: High number of pending orders ({ITEM.LASTVALUE})</name>
+                    <priority>WARNING</priority>
+                    <description>Pending orders have exceeded the warning threshold. Orders may be stuck awaiting payment confirmation.</description>
+                    <tags>
+                        <tag><tag>scope</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>orders</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>wct3c4d5e6f7a8b9c0d1e2f3a4b5c6d7</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.products_out_of_stock)>{$WP_WC_OUT_OF_STOCK_WARN}</expression>
+                    <name>WooCommerce: Multiple products out of stock ({ITEM.LASTVALUE})</name>
+                    <priority>WARNING</priority>
+                    <description>The number of out-of-stock products has exceeded the warning threshold.</description>
+                    <tags>
+                        <tag><tag>scope</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>products</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>wct4d5e6f7a8b9c0d1e2f3a4b5c6d7e8</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.products_low_stock)>{$WP_WC_LOW_STOCK_WARN}</expression>
+                    <name>WooCommerce: Multiple products below low-stock threshold ({ITEM.LASTVALUE})</name>
+                    <priority>INFO</priority>
+                    <description>Several products are running low on stock and may need restocking soon.</description>
+                    <tags>
+                        <tag><tag>scope</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>products</value></tag>
+                    </tags>
+                </trigger>
+
+                <trigger>
+                    <uuid>wct5e6f7a8b9c0d1e2f3a4b5c6d7e8f9</uuid>
+                    <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.cart_abandoned_sessions)>{$WP_WC_ABANDONED_CARTS_WARN}</expression>
+                    <name>WooCommerce: High abandoned cart count ({ITEM.LASTVALUE} sessions)</name>
+                    <priority>INFO</priority>
+                    <description>A large number of sessions have items in the cart but have not completed checkout in the last 24 hours.</description>
+                    <tags>
+                        <tag><tag>scope</tag><value>woocommerce</value></tag>
+                        <tag><tag>category</tag><value>cart</value></tag>
+                    </tags>
+                </trigger>
+
             </triggers>
 
             <!-- ─── Graphs ──────────────────────────────────────────────────── -->
@@ -875,6 +1319,62 @@
                         <graph_item>
                             <color>F59E0B</color>
                             <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.database.autoload_size_kb</key></item>
+                            <yaxisside>RIGHT</yaxisside>
+                            <drawtype>LINE</drawtype>
+                        </graph_item>
+                    </graph_items>
+                </graph>
+
+                <!-- WooCommerce Sales graph -->
+                <graph>
+                    <uuid>wcg1a2b3c4d5e6f7a8b9c0d1e2f3a4b5</uuid>
+                    <name>WooCommerce: Sales Overview</name>
+                    <width>900</width>
+                    <height>200</height>
+                    <graph_items>
+                        <graph_item>
+                            <color>22C55E</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.woocommerce.orders_total_today</key></item>
+                            <yaxisside>LEFT</yaxisside>
+                            <drawtype>GRADIENT_LINE</drawtype>
+                        </graph_item>
+                        <graph_item>
+                            <color>00D4FF</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.woocommerce.revenue_today</key></item>
+                            <yaxisside>RIGHT</yaxisside>
+                            <drawtype>LINE</drawtype>
+                        </graph_item>
+                        <graph_item>
+                            <color>EF4444</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.woocommerce.orders_failed</key></item>
+                            <yaxisside>LEFT</yaxisside>
+                            <drawtype>BOLD_LINE</drawtype>
+                        </graph_item>
+                    </graph_items>
+                </graph>
+
+                <!-- WooCommerce Inventory graph -->
+                <graph>
+                    <uuid>wcg2b3c4d5e6f7a8b9c0d1e2f3a4b5c6</uuid>
+                    <name>WooCommerce: Inventory Status</name>
+                    <width>900</width>
+                    <height>200</height>
+                    <graph_items>
+                        <graph_item>
+                            <color>F59E0B</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.woocommerce.products_low_stock</key></item>
+                            <yaxisside>LEFT</yaxisside>
+                            <drawtype>GRADIENT_LINE</drawtype>
+                        </graph_item>
+                        <graph_item>
+                            <color>EF4444</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.woocommerce.products_out_of_stock</key></item>
+                            <yaxisside>LEFT</yaxisside>
+                            <drawtype>BOLD_LINE</drawtype>
+                        </graph_item>
+                        <graph_item>
+                            <color>7C3AED</color>
+                            <item><host>WordPress by WP Zabbix Monitor</host><key>wordpress.woocommerce.cart_abandoned_sessions</key></item>
                             <yaxisside>RIGHT</yaxisside>
                             <drawtype>LINE</drawtype>
                         </graph_item>

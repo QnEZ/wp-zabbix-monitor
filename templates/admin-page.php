@@ -21,6 +21,7 @@ $groups = array(
     'php'         => __( 'PHP', 'wp-zabbix-monitor' ),
     'server'      => __( 'Server', 'wp-zabbix-monitor' ),
     'cron'        => __( 'Cron', 'wp-zabbix-monitor' ),
+    'woocommerce' => __( 'WooCommerce', 'wp-zabbix-monitor' ),
 );
 
 $enabled_metrics = $settings['enabled_metrics'] ?? array_keys( $groups );
@@ -373,6 +374,48 @@ $enabled_metrics = $settings['enabled_metrics'] ?? array_keys( $groups );
                             <div class="wpzm-metric-label"><?php esc_html_e( 'Overdue Cron Jobs', 'wp-zabbix-monitor' ); ?></div>
                             <div class="wpzm-metric-value">
                                 <span data-metric="cron.overdue_events"><?php echo esc_html( $cr['overdue_events'] ?? '—' ); ?></span>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ( isset( $live['woocommerce'] ) && ! empty( $live['woocommerce'] ) ) : $wc = $live['woocommerce']; ?>
+                        <div class="wpzm-metric-card" style="grid-column:1/-1;background:#f0f4ff;border-color:#c3d0f5;">
+                            <div class="wpzm-metric-label" style="color:#2271b1;font-weight:700;font-size:12px;"><?php esc_html_e( '🛒 WooCommerce', 'wp-zabbix-monitor' ); ?></div>
+                        </div>
+                        <div class="wpzm-metric-card">
+                            <div class="wpzm-metric-label"><?php esc_html_e( 'Orders Today', 'wp-zabbix-monitor' ); ?></div>
+                            <div class="wpzm-metric-value">
+                                <span data-metric="woocommerce.orders_total_today"><?php echo esc_html( $wc['orders_total_today'] ?? '—' ); ?></span>
+                            </div>
+                        </div>
+                        <div class="wpzm-metric-card">
+                            <div class="wpzm-metric-label"><?php esc_html_e( 'Orders/Hour', 'wp-zabbix-monitor' ); ?></div>
+                            <div class="wpzm-metric-value">
+                                <span data-metric="woocommerce.orders_per_hour"><?php echo esc_html( $wc['orders_per_hour'] ?? '—' ); ?></span>
+                            </div>
+                        </div>
+                        <div class="wpzm-metric-card">
+                            <div class="wpzm-metric-label"><?php esc_html_e( 'Revenue Today', 'wp-zabbix-monitor' ); ?></div>
+                            <div class="wpzm-metric-value">
+                                <span data-metric="woocommerce.revenue_today"><?php echo esc_html( $wc['revenue_today'] ?? '—' ); ?></span>
+                            </div>
+                        </div>
+                        <div class="wpzm-metric-card">
+                            <div class="wpzm-metric-label"><?php esc_html_e( 'Pending Orders', 'wp-zabbix-monitor' ); ?></div>
+                            <div class="wpzm-metric-value">
+                                <span data-metric="woocommerce.orders_pending"><?php echo esc_html( $wc['orders_pending'] ?? '—' ); ?></span>
+                            </div>
+                        </div>
+                        <div class="wpzm-metric-card">
+                            <div class="wpzm-metric-label"><?php esc_html_e( 'Out of Stock', 'wp-zabbix-monitor' ); ?></div>
+                            <div class="wpzm-metric-value">
+                                <span data-metric="woocommerce.products_out_of_stock"><?php echo esc_html( $wc['products_out_of_stock'] ?? '—' ); ?></span>
+                            </div>
+                        </div>
+                        <div class="wpzm-metric-card">
+                            <div class="wpzm-metric-label"><?php esc_html_e( 'Low Stock', 'wp-zabbix-monitor' ); ?></div>
+                            <div class="wpzm-metric-value">
+                                <span data-metric="woocommerce.products_low_stock"><?php echo esc_html( $wc['products_low_stock'] ?? '—' ); ?></span>
                             </div>
                         </div>
                     <?php endif; ?>

@@ -48,6 +48,7 @@ class WPZM_Metrics {
             'php'         => array( $this, 'php_info' ),
             'server'      => array( $this, 'server' ),
             'cron'        => array( $this, 'cron' ),
+            'woocommerce' => array( $this, 'woocommerce' ),
         );
 
         if ( empty( $groups ) ) {
@@ -342,5 +343,22 @@ class WPZM_Metrics {
             'overdue_events' => $overdue,
             'next_event_in'  => $next_in,
         );
+    }
+
+    /**
+     * WooCommerce store metrics.
+     * Delegates to WPZM_WooCommerce; returns an empty array if WC is not active.
+     *
+     * @return array<string,mixed>
+     */
+    public function woocommerce(): array {
+        $wc = WPZM_WooCommerce::get_instance();
+        if ( ! $wc->is_woocommerce_active() ) {
+            return array();
+        }
+        $data = $wc->collect();
+        // Strip internal error key if present.
+        unset( $data['_error'] );
+        return $data;
     }
 }
