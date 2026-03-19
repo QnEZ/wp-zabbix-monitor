@@ -40,6 +40,7 @@ $enabled_metrics = $settings['enabled_metrics'] ?? array_keys( $groups );
         <button class="wpzm-tab" data-tab="api"><?php esc_html_e( 'REST API', 'wp-zabbix-monitor' ); ?></button>
         <button class="wpzm-tab" data-tab="metrics"><?php esc_html_e( 'Metrics', 'wp-zabbix-monitor' ); ?></button>
         <button class="wpzm-tab" data-tab="live"><?php esc_html_e( 'Live Data', 'wp-zabbix-monitor' ); ?></button>
+        <button class="wpzm-tab wpzm-tab-provision" data-tab="provision"><?php esc_html_e( '⚡ Auto-Provision', 'wp-zabbix-monitor' ); ?></button>
     </div>
 
     <form method="post" action="options.php">
@@ -381,4 +382,143 @@ $enabled_metrics = $settings['enabled_metrics'] ?? array_keys( $groups );
         </div><!-- /live tab -->
 
     </form>
+
+    <!-- ── Tab: Auto-Provision (outside form — uses AJAX only) ──────────── -->
+    <div id="wpzm-tab-provision" class="wpzm-tab-content">
+
+        <?php
+        $prov_last_run  = $settings['provision_last_run']  ?? 0;
+        $prov_host_id   = $settings['provision_host_id']   ?? '';
+        $prov_host_name = $settings['provision_host_name'] ?? '';
+        $prov_api_url   = $settings['provision_api_url']   ?? '';
+        $prov_username  = $settings['provision_username']  ?? '';
+        ?>
+
+        <div class="wpzm-card">
+            <h2><span class="dashicons dashicons-cloud-upload"></span>
+                <?php esc_html_e( 'Zabbix API Auto-Provisioning', 'wp-zabbix-monitor' ); ?>
+            </h2>
+            <p class="description">
+                <?php esc_html_e(
+                    'Automatically create (or update) a Zabbix host for this WordPress site using the Zabbix JSON-RPC API. '
+                    . 'The plugin will locate the imported template, create the host group if needed, and set the {$WP_URL} and {$WP_API_TOKEN} macros automatically.',
+                    'wp-zabbix-monitor'
+                ); ?>
+            </p>
+
+            <?php if ( $prov_host_id ) : ?>
+                <div class="wpzm-provision-status ok">
+                    <span class="dashicons dashicons-yes-alt"></span>
+                    <?php printf(
+                        esc_html__( 'Last provisioned: host "%1$s" (ID: %2$s) on %3$s', 'wp-zabbix-monitor' ),
+                        esc_html( $prov_host_name ),
+                        esc_html( $prov_host_id ),
+                        esc_html( wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $prov_last_run ) )
+                    ); ?>
+                </div>
+            <?php endif; ?>
+
+            <table class="form-table wpzm-form-table" style="margin-top:16px;">
+                <tr>
+                    <th scope="row">
+                        <label for="wpzm-prov-api-url"><?php esc_html_e( 'Zabbix API URL', 'wp-zabbix-monitor' ); ?></label>
+                    </th>
+                    <td>
+                        <input type="url" id="wpzm-prov-api-url"
+                               value="<?php echo esc_attr( $prov_api_url ); ?>"
+                               placeholder="https://zabbix.example.com/api_jsonrpc.php"
+                               class="regular-text" />
+                        <p class="description"><?php esc_html_e( 'Full URL to the Zabbix JSON-RPC endpoint (usually /api_jsonrpc.php).', 'wp-zabbix-monitor' ); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="wpzm-prov-username"><?php esc_html_e( 'Zabbix Username', 'wp-zabbix-monitor' ); ?></label>
+                    </th>
+                    <td>
+                        <input type="text" id="wpzm-prov-username"
+                               value="<?php echo esc_attr( $prov_username ); ?>"
+                               placeholder="Admin"
+                               class="regular-text" autocomplete="username" />
+                        <p class="description"><?php esc_html_e( 'Zabbix frontend user with at least Host write permission.', 'wp-zabbix-monitor' ); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="wpzm-prov-password"><?php esc_html_e( 'Zabbix Password', 'wp-zabbix-monitor' ); ?></label>
+                    </th>
+                    <td>
+                        <input type="password" id="wpzm-prov-password"
+                               placeholder="••••••••"
+                               class="regular-text" autocomplete="current-password" />
+                        <p class="description"><?php esc_html_e( 'Password is sent over HTTPS and never stored in the database.', 'wp-zabbix-monitor' ); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="wpzm-prov-host-name"><?php esc_html_e( 'Host Display Name', 'wp-zabbix-monitor' ); ?></label>
+                    </th>
+                    <td>
+                        <input type="text" id="wpzm-prov-host-name"
+                               value="<?php echo esc_attr( $prov_host_name ?: get_bloginfo( 'name' ) ); ?>"
+                               class="regular-text" />
+                        <p class="description"><?php esc_html_e( 'Visible name for the host in Zabbix. Defaults to the site name.', 'wp-zabbix-monitor' ); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="wpzm-prov-host-group"><?php esc_html_e( 'Host Group', 'wp-zabbix-monitor' ); ?></label>
+                    </th>
+                    <td>
+                        <input type="text" id="wpzm-prov-host-group"
+                               value="WordPress Sites"
+                               class="regular-text" />
+                        <p class="description"><?php esc_html_e( 'Zabbix host group to assign. Created automatically if it does not exist.', 'wp-zabbix-monitor' ); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="wpzm-prov-template"><?php esc_html_e( 'Template Name', 'wp-zabbix-monitor' ); ?></label>
+                    </th>
+                    <td>
+                        <input type="text" id="wpzm-prov-template"
+                               value="WordPress by WP Zabbix Monitor"
+                               class="regular-text" />
+                        <p class="description"><?php esc_html_e( 'Exact name of the imported Zabbix template. Must be imported before provisioning.', 'wp-zabbix-monitor' ); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php esc_html_e( 'Verify SSL', 'wp-zabbix-monitor' ); ?></th>
+                    <td>
+                        <label>
+                            <input type="checkbox" id="wpzm-prov-ssl" checked />
+                            <?php esc_html_e( 'Verify Zabbix server SSL certificate', 'wp-zabbix-monitor' ); ?>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="wpzm-card">
+            <h2><span class="dashicons dashicons-controls-play"></span>
+                <?php esc_html_e( 'Provisioning Actions', 'wp-zabbix-monitor' ); ?>
+            </h2>
+            <p class="description">
+                <?php esc_html_e( 'Test your credentials first, then run provisioning. Running provisioning on an existing host will update its template link and macros without deleting historical data.', 'wp-zabbix-monitor' ); ?>
+            </p>
+
+            <div class="wpzm-action-bar">
+                <button type="button" id="wpzm-test-api-conn" class="button">
+                    <?php esc_html_e( 'Test API Connection', 'wp-zabbix-monitor' ); ?>
+                </button>
+                <button type="button" id="wpzm-run-provision" class="button button-primary">
+                    <?php esc_html_e( 'Provision Host in Zabbix', 'wp-zabbix-monitor' ); ?>
+                </button>
+            </div>
+
+            <div id="wpzm-provision-result" style="margin-top:12px;"></div>
+        </div>
+
+    </div><!-- /provision tab -->
+
 </div>

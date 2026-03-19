@@ -324,3 +324,62 @@
 @keyframes wpzm-spin {
     to { transform: rotate(360deg); }
 }
+
+/* ── Auto-Provision tab ──────────────────────────────────────────────────── */
+.wpzm-tab-provision {
+    background: linear-gradient(135deg, #7c3aed, #2563eb) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+    border-radius: 4px 4px 0 0;
+}
+
+.wpzm-tab-provision:hover,
+.wpzm-tab-provision.active {
+    background: linear-gradient(135deg, #6d28d9, #1d4ed8) !important;
+    color: #fff !important;
+    border-bottom-color: transparent !important;
+}
+
+.wpzm-provision-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin: 12px 0;
+    font-size: 13px;
+}
+
+.wpzm-provision-status.ok {
+    background: #edfaef;
+    border: 1px solid #46b450;
+    color: #1a6b1f;
+}
+
+.wpzm-provision-status.error {
+    background: #fdf2f2;
+    border: 1px solid #dc3232;
+    color: #8c1515;
+}
+
+#wpzm-provision-result {
+    display: none;
+    padding: 12px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+#wpzm-provision-result.success {
+    background: #edfaef;
+    border: 1px solid #46b450;
+    color: #1a6b1f;
+    display: block;
+}
+
+#wpzm-provision-result.error {
+    background: #fdf2f2;
+    border: 1px solid #dc3232;
+    color: #8c1515;
+    display: block;
+}

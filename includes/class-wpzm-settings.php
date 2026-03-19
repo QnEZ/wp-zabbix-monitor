@@ -66,6 +66,17 @@ class WPZM_Settings {
     }
 
     /**
+     * Set a single option value and persist it.
+     *
+     * @param string $key   Option key.
+     * @param mixed  $value New value.
+     */
+    public function set( string $key, $value ): void {
+        $this->options[ $key ] = $value;
+        update_option( WPZM_OPTION_KEY, $this->options );
+    }
+
+    /**
      * Regenerate the API token and persist it.
      *
      * @return string New token.

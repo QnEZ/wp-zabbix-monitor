@@ -37,6 +37,8 @@ class WPZM_Admin {
         add_action( 'wp_ajax_wpzm_regen_token',     array( $this, 'ajax_regen_token' ) );
         add_action( 'wp_ajax_wpzm_test_connection', array( $this, 'ajax_test_connection' ) );
         add_action( 'wp_ajax_wpzm_get_metrics',     array( $this, 'ajax_get_metrics' ) );
+        add_action( 'wp_ajax_wpzm_provision',        array( $this, 'ajax_provision' ) );
+        add_action( 'wp_ajax_wpzm_test_api_conn',    array( $this, 'ajax_test_api_connection' ) );
 
         // Plugin action links.
         add_filter(
@@ -200,6 +202,85 @@ class WPZM_Admin {
 
         $metrics = WPZM_Metrics::get_instance()->collect();
         wp_send_json_success( $metrics );
+    }
+
+    // ─── Provisioning AJAX handlers ──────────────────────────────────────────
+
+    /**
+     * AJAX: Test Zabbix API connection credentials.
+     */
+    public function ajax_test_api_connection(): void {
+        check_ajax_referer( 'wpzm_admin_nonce', 'nonce' );
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( array( 'message' => 'Insufficient permissions.' ), 403 );
+        }
+
+        $api_url  = sanitize_text_field( wp_unslash( $_POST['api_url']  ?? '' ) );
+        $username = sanitize_text_field( wp_unslash( $_POST['username'] ?? '' ) );
+        $password = sanitize_text_field( wp_unslash( $_POST['password'] ?? '' ) );
+        $ssl      = ! empty( $_POST['ssl_verify'] );
+
+        if ( empty( $api_url ) || empty( $username ) || empty( $password ) ) {
+            wp_send_json_error( array( 'message' => 'API URL, username, and password are required.' ) );
+        }
+
+        require_once WPZM_PLUGIN_DIR . 'includes/class-wpzm-provisioner.php';
+        $provisioner = new WPZM_Provisioner( $api_url, $username, $password, $ssl );
+        $result      = $provisioner->test_connection();
+
+        if ( $result['success'] ) {
+            wp_send_json_success( $result );
+        } else {
+            wp_send_json_error( $result );
+        }
+    }
+
+    /**
+     * AJAX: Run the full host provisioning workflow.
+     */
+    public function ajax_provision(): void {
+        check_ajax_referer( 'wpzm_admin_nonce', 'nonce' );
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( array( 'message' => 'Insufficient permissions.' ), 403 );
+        }
+
+        $api_url       = sanitize_text_field( wp_unslash( $_POST['api_url']       ?? '' ) );
+        $username      = sanitize_text_field( wp_unslash( $_POST['username']      ?? '' ) );
+        $password      = sanitize_text_field( wp_unslash( $_POST['password']      ?? '' ) );
+        $host_name     = sanitize_text_field( wp_unslash( $_POST['host_name']     ?? '' ) );
+        $host_group    = sanitize_text_field( wp_unslash( $_POST['host_group']    ?? 'WordPress Sites' ) );
+        $template_name = sanitize_text_field( wp_unslash( $_POST['template_name'] ?? 'WordPress by WP Zabbix Monitor' ) );
+        $ssl           = ! empty( $_POST['ssl_verify'] );
+
+        if ( empty( $api_url ) || empty( $username ) || empty( $password ) || empty( $host_name ) ) {
+            wp_send_json_error( array( 'message' => 'API URL, username, password, and host name are required.' ) );
+        }
+
+        $settings  = WPZM_Settings::get_instance();
+        $wp_url    = get_site_url();
+        $api_token = $settings->get( 'api_token', '' );
+
+        require_once WPZM_PLUGIN_DIR . 'includes/class-wpzm-provisioner.php';
+        $provisioner = new WPZM_Provisioner( $api_url, $username, $password, $ssl );
+        $result      = $provisioner->provision(
+            $host_name,
+            $host_group,
+            $template_name,
+            $wp_url,
+            $api_token
+        );
+
+        // Persist provisioning settings for future reference.
+        if ( $result['success'] ) {
+            $settings->set( 'provision_api_url',   $api_url );
+            $settings->set( 'provision_username',  $username );
+            $settings->set( 'provision_host_name', $host_name );
+            $settings->set( 'provision_host_id',   $result['host_id'] ?? '' );
+            $settings->set( 'provision_last_run',  time() );
+            wp_send_json_success( $result );
+        } else {
+            wp_send_json_error( $result );
+        }
     }
 
     // ─── Plugin action links ──────────────────────────────────────────────────

@@ -162,8 +162,108 @@
         });
     }
 
-    // ── Toggle push settings visibility ──────────────────────────────────────
-    function togglePushSettings() {
+    // ── Auto-Provision: Test API connection ─────────────────────────────────
+    $('#wpzm-test-api-conn').on('click', function () {
+        var $btn    = $(this);
+        var $result = $('#wpzm-provision-result');
+        var payload = getProvisionPayload();
+
+        if (!payload) { return; }
+
+        $btn.prop('disabled', true).text('Testing…');
+        $result.removeClass('success error').html('');
+
+        $.post(data.ajaxUrl, $.extend({ action: 'wpzm_test_api_conn', nonce: data.nonce }, payload))
+        .done(function (res) {
+            if (res.success) {
+                $result.addClass('success').html(
+                    '<span class="dashicons dashicons-yes-alt"></span> ' +
+                    'Connection successful. Zabbix API version: <strong>' + (res.data.version || 'unknown') + '</strong>'
+                ).show();
+            } else {
+                $result.addClass('error').html(
+                    '<span class="dashicons dashicons-warning"></span> ' +
+                    'Connection failed: ' + (res.data.message || 'Unknown error')
+                ).show();
+            }
+        })
+        .fail(function () {
+            $result.addClass('error').text('Request failed.').show();
+        })
+        .always(function () {
+            $btn.prop('disabled', false).text('Test API Connection');
+        });
+    });
+
+    // ── Auto-Provision: Run provisioning ────────────────────────────────────────
+    $('#wpzm-run-provision').on('click', function () {
+        var $btn    = $(this);
+        var $result = $('#wpzm-provision-result');
+        var payload = getProvisionPayload();
+
+        if (!payload) { return; }
+
+        if (!confirm('This will create or update a Zabbix host for this site. Continue?')) {
+            return;
+        }
+
+        $btn.prop('disabled', true).text('Provisioning…');
+        $result.removeClass('success error').html('');
+
+        $.post(data.ajaxUrl, $.extend({ action: 'wpzm_provision', nonce: data.nonce }, payload))
+        .done(function (res) {
+            if (res.success) {
+                $result.addClass('success').html(
+                    '<span class="dashicons dashicons-yes-alt"></span> ' +
+                    '<strong>' + res.data.message + '</strong><br>' +
+                    'Host ID: ' + res.data.host_id + '<br>' +
+                    'Macros set: <code>{$WP_URL}</code> and <code>{$WP_API_TOKEN}</code>'
+                ).show();
+            } else {
+                $result.addClass('error').html(
+                    '<span class="dashicons dashicons-warning"></span> ' +
+                    'Provisioning failed: ' + (res.data.message || 'Unknown error')
+                ).show();
+            }
+        })
+        .fail(function () {
+            $result.addClass('error').text('Request failed.').show();
+        })
+        .always(function () {
+            $btn.prop('disabled', false).text('Provision Host in Zabbix');
+        });
+    });
+
+    function getProvisionPayload() {
+        var apiUrl   = $('#wpzm-prov-api-url').val().trim();
+        var username = $('#wpzm-prov-username').val().trim();
+        var password = $('#wpzm-prov-password').val();
+        var hostName = $('#wpzm-prov-host-name').val().trim();
+        var group    = $('#wpzm-prov-host-group').val().trim();
+        var template = $('#wpzm-prov-template').val().trim();
+        var ssl      = $('#wpzm-prov-ssl').is(':checked') ? '1' : '';
+
+        if (!apiUrl || !username || !password) {
+            alert('Please fill in the Zabbix API URL, username, and password.');
+            return null;
+        }
+        if (!hostName) {
+            alert('Please enter a host display name.');
+            return null;
+        }
+
+        return {
+            api_url:       apiUrl,
+            username:      username,
+            password:      password,
+            host_name:     hostName,
+            host_group:    group || 'WordPress Sites',
+            template_name: template || 'WordPress by WP Zabbix Monitor',
+            ssl_verify:    ssl
+        };
+    }
+
+    // ── Toggle push settings visibility ──────────────────────────────────────────────function togglePushSettings() {
         var enabled = $('#wpzm-push-enabled').is(':checked');
         $('.wpzm-push-settings').toggle(enabled);
     }
