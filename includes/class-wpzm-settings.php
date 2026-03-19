@@ -51,18 +51,22 @@ class WPZM_Settings {
     }
 
     /**
-     * Persist validated options to the database.
+     * Sanitise settings. Called as WordPress sanitize_callback.
+     *
+     * IMPORTANT: sanitize_callback MUST return the sanitised value — WordPress
+     * stores whatever this function returns as the option value. Returning true
+     * or WP_Error would corrupt the stored option.
      *
      * @param array<string,mixed> $raw Raw POST data.
-     * @return true|\WP_Error
+     * @return array<string,mixed> Sanitised settings array.
      */
-    public function save( array $raw ) {
-        $sanitised = $this->sanitise( $raw );
-        $result    = update_option( WPZM_OPTION_KEY, $sanitised );
-        if ( $result ) {
-            $this->options = $sanitised;
+    public function save( $raw ): array {
+        if ( ! is_array( $raw ) ) {
+            $raw = array();
         }
-        return $result ? true : new \WP_Error( 'save_failed', __( 'Settings could not be saved.', 'wp-zabbix-monitor' ) );
+        $sanitised     = $this->sanitise( $raw );
+        $this->options = $sanitised;
+        return $sanitised;
     }
 
     /**

@@ -3,7 +3,7 @@
  * Plugin Name:       WP Zabbix Monitor
  * Plugin URI:        https://github.com/your-org/wp-zabbix-monitor
  * Description:       Full-stack WordPress monitoring plugin that exposes site metrics via a secured REST API endpoint and pushes data to a Zabbix server using the Zabbix Sender protocol. Includes a ready-to-import Zabbix template with items, triggers, and graphs.
- * Version:           1.2.11
+ * Version:           1.2.12
  * Requires at least: 5.9
  * Requires PHP:      7.4
  * Author:            QnEZ Servers
