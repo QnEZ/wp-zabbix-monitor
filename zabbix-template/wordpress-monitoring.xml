@@ -14,7 +14,6 @@
 -->
 <zabbix_export>
     <version>7.4</version>
-    <date>2024-01-01T00:00:00Z</date>
 
     <template_groups>
         <template_group>
@@ -1388,48 +1387,54 @@
                 <dashboard>
                     <uuid>8b224a7963f834552c40ef007b5b8034</uuid>
                     <name>WordPress Overview</name>
+                    <display_period>30</display_period>
+                    <auto_start>YES</auto_start>
                     <pages>
                         <page>
                             <name>Overview</name>
                             <widgets>
                                 <widget>
-                                    <type>GRAPH_CLASSIC</type>
+                                    <type>graph</type>
                                     <name>Performance</name>
                                     <x>0</x><y>0</y><width>12</width><height>5</height>
                                     <fields>
-                                        <field><type>GRAPH</type><name>graphid</name>
+                                        <field><type>GRAPH</type><name>graphid.0</name>
                                             <value><host>WordPress by WP Zabbix Monitor</host><name>WordPress: Performance Overview</name></value>
                                         </field>
+                                                                            <field><type>STRING</type><name>reference</name><value>ABAAA</value></field>
                                     </fields>
                                 </widget>
                                 <widget>
-                                    <type>GRAPH_CLASSIC</type>
+                                    <type>graph</type>
                                     <name>Database Activity</name>
                                     <x>12</x><y>0</y><width>12</width><height>5</height>
                                     <fields>
-                                        <field><type>GRAPH</type><name>graphid</name>
+                                        <field><type>GRAPH</type><name>graphid.0</name>
                                             <value><host>WordPress by WP Zabbix Monitor</host><name>WordPress: Database Activity</name></value>
                                         </field>
+                                                                            <field><type>STRING</type><name>reference</name><value>ACAAA</value></field>
                                     </fields>
                                 </widget>
                                 <widget>
-                                    <type>GRAPH_CLASSIC</type>
+                                    <type>graph</type>
                                     <name>User Growth</name>
                                     <x>0</x><y>5</y><width>12</width><height>5</height>
                                     <fields>
-                                        <field><type>GRAPH</type><name>graphid</name>
+                                        <field><type>GRAPH</type><name>graphid.0</name>
                                             <value><host>WordPress by WP Zabbix Monitor</host><name>WordPress: User Growth</name></value>
                                         </field>
+                                                                            <field><type>STRING</type><name>reference</name><value>ADAAA</value></field>
                                     </fields>
                                 </widget>
                                 <widget>
-                                    <type>GRAPH_CLASSIC</type>
+                                    <type>graph</type>
                                     <name>Disk Usage</name>
                                     <x>12</x><y>5</y><width>12</width><height>5</height>
                                     <fields>
-                                        <field><type>GRAPH</type><name>graphid</name>
+                                        <field><type>GRAPH</type><name>graphid.0</name>
                                             <value><host>WordPress by WP Zabbix Monitor</host><name>WordPress: Disk Usage</name></value>
                                         </field>
+                                                                            <field><type>STRING</type><name>reference</name><value>AEAAA</value></field>
                                     </fields>
                                 </widget>
                             </widgets>
@@ -1441,14 +1446,14 @@
 
             <!-- ─── Value maps ──────────────────────────────────────────────── -->
             <valuemaps>
-        <value_map>
+        <valuemap>
             <uuid>5819063a19fdc92d5b99927076b5c0bd</uuid>
             <name>Service state</name>
             <mappings>
                 <mapping><value>0</value><newvalue>Down</newvalue></mapping>
                 <mapping><value>1</value><newvalue>Up</newvalue></mapping>
             </mappings>
-        </value_map>
+        </valuemap>
                 </valuemaps>
 
         </template>
