@@ -263,7 +263,8 @@
         };
     }
 
-    // ── Toggle push settings visibility ──────────────────────────────────────────────function togglePushSettings() {
+    // ── Toggle push settings visibility ──────────────────────────────────────────────
+    function togglePushSettings() {
         var enabled = $('#wpzm-push-enabled').is(':checked');
         $('.wpzm-push-settings').toggle(enabled);
     }
