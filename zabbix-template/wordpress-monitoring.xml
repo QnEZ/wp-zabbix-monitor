@@ -1643,7 +1643,7 @@
                         <key>wordpress.performance.memory_usage_mb</key>
                     </item>
                     <yaxisside>RIGHT</yaxisside>
-                    <drawtype>LINE</drawtype>
+                    <drawtype>SINGLE_LINE</drawtype>
                 </graph_item>
             </graph_items>
         </graph>
@@ -1669,7 +1669,7 @@
                         <key>wordpress.database.query_time_ms</key>
                     </item>
                     <yaxisside>RIGHT</yaxisside>
-                    <drawtype>LINE</drawtype>
+                    <drawtype>SINGLE_LINE</drawtype>
                 </graph_item>
                 <graph_item>
                     <color>EF4444</color>
@@ -1730,7 +1730,7 @@
                         <key>wordpress.server.disk_free_gb</key>
                     </item>
                     <yaxisside>RIGHT</yaxisside>
-                    <drawtype>LINE</drawtype>
+                    <drawtype>SINGLE_LINE</drawtype>
                 </graph_item>
             </graph_items>
         </graph>
@@ -1773,7 +1773,7 @@
                         <key>wordpress.database.autoload_size_kb</key>
                     </item>
                     <yaxisside>RIGHT</yaxisside>
-                    <drawtype>LINE</drawtype>
+                    <drawtype>SINGLE_LINE</drawtype>
                 </graph_item>
             </graph_items>
         </graph>
@@ -1799,7 +1799,7 @@
                         <key>wordpress.woocommerce.revenue_today</key>
                     </item>
                     <yaxisside>RIGHT</yaxisside>
-                    <drawtype>LINE</drawtype>
+                    <drawtype>SINGLE_LINE</drawtype>
                 </graph_item>
                 <graph_item>
                     <color>EF4444</color>
@@ -1843,7 +1843,7 @@
                         <key>wordpress.woocommerce.cart_abandoned_sessions</key>
                     </item>
                     <yaxisside>RIGHT</yaxisside>
-                    <drawtype>LINE</drawtype>
+                    <drawtype>SINGLE_LINE</drawtype>
                 </graph_item>
             </graph_items>
         </graph>
