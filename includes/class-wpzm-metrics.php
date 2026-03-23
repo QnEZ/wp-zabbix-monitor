@@ -1,19 +1,20 @@
 <?php
-/**
- * WPZM_Metrics — collects WordPress site metrics across multiple categories.
- *
- * Categories:
- *   performance  — page load time, TTFB, WP memory, peak memory
- *   database     — query count, total query time, slow queries, DB size
- *   users        — total users, active sessions, new users (24h), admins
- *   content      — posts, pages, comments (approved/pending/spam), media
- *   plugins      — total, active, inactive, update-available count
- *   php          — version, memory limit, max execution time, opcache
- *   server       — PHP SAPI, OS, server software, disk free/total
- *   cron         — next scheduled event, overdue events count
- *
- * @package WP_Zabbix_Monitor
- */
+    /**
+     * WPZM_Metrics — collects WordPress site metrics across multiple categories.
+     *
+     * Categories:
+     *   performance  — page load time, TTFB, WP memory, peak memory
+     *   database     — query count, total query time, slow queries, DB size
+     *   users        — total users, active sessions, new users (24h), admins
+     *   content      — posts, pages, comments (approved/pending/spam), media
+     *   plugins      — total, active, inactive, update-available count
+     *   php          — version, memory limit, max execution time, opcache
+     *   server       — PHP SAPI, OS, server software, disk free/total
+     *   cron         — next scheduled event, overdue events count
+     *   matomo       — pageviews, visitors, bounce rate, traffic sources (requires Matomo API)
+     *
+     * @package WP_Zabbix_Monitor
+     */
 
 defined( 'ABSPATH' ) || exit;
 
@@ -49,6 +50,7 @@ class WPZM_Metrics {
             'server'      => array( $this, 'server' ),
             'cron'        => array( $this, 'cron' ),
             'woocommerce' => array( $this, 'woocommerce' ),
+            'matomo'      => array( WPZM_Matomo::get_instance(), 'collect' ),
         );
 
         if ( empty( $groups ) ) {

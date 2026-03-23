@@ -2,6 +2,33 @@
 
 All notable changes to WP Zabbix Monitor will be documented in this file.
 
+## [1.3.0] - 2026-03-23
+
+### Added
+- **Matomo Integration**: New matomo metric group collects analytics data from self-hosted Matomo instances
+  - Site-level metrics: pageviews, unique visitors, bounce rate, avg session duration
+  - Traffic sources: direct, organic, referral, social, campaigns
+  - Top 5 most-visited pages with hit counts
+  - Matomo settings fields: URL, API token, site ID (configurable in WordPress admin)
+  - 12 new Zabbix dependent items with JSONPath parsing
+  - 3 new triggers: low traffic, high bounce rate, low engagement
+  - 2 new graphs: Traffic & Engagement and Traffic Sources
+  - Metrics collected on same WP-Cron schedule as other groups
+  - Exposed via REST API when matomo group is enabled
+
+### Changed
+- Updated WPZM_Settings to support Matomo configuration
+- Updated WPZM_Metrics to include Matomo collector in the metrics collection pipeline
+- Zabbix template now includes 52 total items (40 WordPress + 12 Matomo)
+
+### Technical Details
+- New class: WPZM_Matomo handles Matomo API communication
+- Uses WordPress wp_remote_get() for HTTP requests with 10-second timeout
+- Graceful error handling if Matomo is not configured or unreachable
+- Matomo metrics are optional; plugin works without Matomo configuration
+
+---
+
 ## [1.2.13] - 2026-03-23
 
 ### Fixed

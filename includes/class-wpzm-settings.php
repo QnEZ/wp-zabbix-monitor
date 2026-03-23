@@ -112,9 +112,12 @@ class WPZM_Settings {
             'push_interval'   => 60,
             'allowed_ips'     => '',
             'ssl_verify'      => true,
+            'matomo_url'      => '',
+            'matomo_token'    => '',
+            'matomo_site_id'  => 0,
             'enabled_metrics' => array(
                 'performance', 'database', 'users', 'content',
-                'plugins', 'php', 'server', 'cron',
+                'plugins', 'php', 'server', 'cron', 'matomo',
             ),
         );
     }
@@ -165,8 +168,20 @@ class WPZM_Settings {
 
         $current['ssl_verify'] = ! empty( $raw['ssl_verify'] );
 
+        if ( isset( $raw['matomo_url'] ) ) {
+            $current['matomo_url'] = esc_url_raw( $raw['matomo_url'] );
+        }
+
+        if ( isset( $raw['matomo_token'] ) ) {
+            $current['matomo_token'] = sanitize_text_field( $raw['matomo_token'] );
+        }
+
+        if ( isset( $raw['matomo_site_id'] ) ) {
+            $current['matomo_site_id'] = max( 1, (int) $raw['matomo_site_id'] );
+        }
+
         if ( isset( $raw['enabled_metrics'] ) && is_array( $raw['enabled_metrics'] ) ) {
-            $allowed = array( 'performance', 'database', 'users', 'content', 'plugins', 'php', 'server', 'cron' );
+            $allowed = array( 'performance', 'database', 'users', 'content', 'plugins', 'php', 'server', 'cron', 'matomo' );
             $current['enabled_metrics'] = array_values( array_intersect( $raw['enabled_metrics'], $allowed ) );
         }
 

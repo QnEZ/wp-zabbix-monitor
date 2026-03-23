@@ -1277,6 +1277,308 @@
                         </tag>
                     </tags>
                 </item>
+                <item>
+                    <uuid>8f9a1b2c3d4e5f6a7b8c9d0e1f2a3b4c</uuid>
+                    <name>Matomo: Site pageviews (today)</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.matomo.site.pageviews</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <master_item>
+                        <key>wordpress.metrics.push</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.matomo.site.pageviews</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>matomo</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4d</uuid>
+                    <name>Matomo: Unique visitors (today)</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.matomo.site.unique_visitors</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <master_item>
+                        <key>wordpress.metrics.push</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.matomo.site.unique_visitors</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>matomo</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5e</uuid>
+                    <name>Matomo: Bounce rate (%)</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.matomo.site.bounce_rate_pct</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <master_item>
+                        <key>wordpress.metrics.push</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.matomo.site.bounce_rate_pct</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>matomo</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6f</uuid>
+                    <name>Matomo: Avg session duration (sec)</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.matomo.site.avg_session_duration_sec</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>sec</units>
+                    <master_item>
+                        <key>wordpress.metrics.push</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.matomo.site.avg_session_duration_sec</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>matomo</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b70</uuid>
+                    <name>Matomo: Traffic - Direct</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.matomo.sources.direct</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <master_item>
+                        <key>wordpress.metrics.push</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.matomo.sources.direct</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>matomo</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b71</uuid>
+                    <name>Matomo: Traffic - Organic</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.matomo.sources.organic</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <master_item>
+                        <key>wordpress.metrics.push</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.matomo.sources.organic</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>matomo</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b72</uuid>
+                    <name>Matomo: Traffic - Referral</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.matomo.sources.referral</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <master_item>
+                        <key>wordpress.metrics.push</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.matomo.sources.referral</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>matomo</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b73</uuid>
+                    <name>Matomo: Traffic - Social</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.matomo.sources.social</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <master_item>
+                        <key>wordpress.metrics.push</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.matomo.sources.social</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>matomo</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b74</uuid>
+                    <name>Matomo: Traffic - Campaigns</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.matomo.sources.campaigns</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <master_item>
+                        <key>wordpress.metrics.push</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.matomo.sources.campaigns</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>matomo</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b75</uuid>
+                    <name>Matomo: Top page 1 hits</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.matomo.top_pages.page_1_hits</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <master_item>
+                        <key>wordpress.metrics.push</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.matomo.top_pages.page_1.hits</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>matomo</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b76</uuid>
+                    <name>Matomo: Top page 2 hits</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.matomo.top_pages.page_2_hits</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <master_item>
+                        <key>wordpress.metrics.push</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.matomo.top_pages.page_2.hits</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>matomo</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b77</uuid>
+                    <name>Matomo: Top page 3 hits</name>
+                    <type>DEPENDENT</type>
+                    <key>wordpress.matomo.top_pages.page_3_hits</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <master_item>
+                        <key>wordpress.metrics.push</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.matomo.top_pages.page_3.hits</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>matomo</value>
+                        </tag>
+                    </tags>
+                </item>
             </items>
             <dashboards>
                 <dashboard>
@@ -1640,6 +1942,57 @@
                 </tag>
             </tags>
         </trigger>
+        <trigger>
+            <uuid>a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6</uuid>
+            <expression>last(/WordPress by WP Zabbix Monitor/wordpress.matomo.site.pageviews)&lt;10</expression>
+            <name>Matomo: Low traffic detected (pageviews &lt; 10)</name>
+            <priority>INFO</priority>
+            <description>Site pageviews are unusually low. This may indicate a traffic drop or tracking issue.</description>
+            <tags>
+                <tag>
+                    <tag>scope</tag>
+                    <value>matomo</value>
+                </tag>
+                <tag>
+                    <tag>category</tag>
+                    <value>traffic</value>
+                </tag>
+            </tags>
+        </trigger>
+        <trigger>
+            <uuid>b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7</uuid>
+            <expression>last(/WordPress by WP Zabbix Monitor/wordpress.matomo.site.bounce_rate_pct)&gt;70</expression>
+            <name>Matomo: High bounce rate detected (&gt; 70%)</name>
+            <priority>WARN</priority>
+            <description>Bounce rate is elevated. Users may not be finding relevant content or experiencing issues.</description>
+            <tags>
+                <tag>
+                    <tag>scope</tag>
+                    <value>matomo</value>
+                </tag>
+                <tag>
+                    <tag>category</tag>
+                    <value>engagement</value>
+                </tag>
+            </tags>
+        </trigger>
+        <trigger>
+            <uuid>c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8</uuid>
+            <expression>last(/WordPress by WP Zabbix Monitor/wordpress.matomo.site.avg_session_duration_sec)&lt;30</expression>
+            <name>Matomo: Low average session duration (&lt; 30 sec)</name>
+            <priority>INFO</priority>
+            <description>Users are spending very little time on the site. Content may not be engaging or navigation may be confusing.</description>
+            <tags>
+                <tag>
+                    <tag>scope</tag>
+                    <value>matomo</value>
+                </tag>
+                <tag>
+                    <tag>category</tag>
+                    <value>engagement</value>
+                </tag>
+            </tags>
+        </trigger>
     </triggers>
     <graphs>
         <graph>
@@ -1864,6 +2217,85 @@
                         <key>wordpress.woocommerce.cart_abandoned_sessions</key>
                     </item>
                     <yaxisside>RIGHT</yaxisside>
+                    <drawtype>SINGLE_LINE</drawtype>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9</uuid>
+            <name>Matomo: Traffic & Engagement</name>
+            <width>900</width>
+            <height>200</height>
+            <graph_items>
+                <graph_item>
+                    <color>00D4FF</color>
+                    <item>
+                        <host>WordPress by WP Zabbix Monitor</host>
+                        <key>wordpress.matomo.site.pageviews</key>
+                    </item>
+                    <yaxisside>LEFT</yaxisside>
+                    <drawtype>GRADIENT_LINE</drawtype>
+                </graph_item>
+                <graph_item>
+                    <color>10B981</color>
+                    <item>
+                        <host>WordPress by WP Zabbix Monitor</host>
+                        <key>wordpress.matomo.site.unique_visitors</key>
+                    </item>
+                    <yaxisside>LEFT</yaxisside>
+                    <drawtype>SINGLE_LINE</drawtype>
+                </graph_item>
+                <graph_item>
+                    <color>F59E0B</color>
+                    <item>
+                        <host>WordPress by WP Zabbix Monitor</host>
+                        <key>wordpress.matomo.site.bounce_rate_pct</key>
+                    </item>
+                    <yaxisside>RIGHT</yaxisside>
+                    <drawtype>BOLD_LINE</drawtype>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0</uuid>
+            <name>Matomo: Traffic Sources</name>
+            <width>900</width>
+            <height>200</height>
+            <graph_items>
+                <graph_item>
+                    <color>00D4FF</color>
+                    <item>
+                        <host>WordPress by WP Zabbix Monitor</host>
+                        <key>wordpress.matomo.sources.direct</key>
+                    </item>
+                    <yaxisside>LEFT</yaxisside>
+                    <drawtype>GRADIENT_LINE</drawtype>
+                </graph_item>
+                <graph_item>
+                    <color>10B981</color>
+                    <item>
+                        <host>WordPress by WP Zabbix Monitor</host>
+                        <key>wordpress.matomo.sources.organic</key>
+                    </item>
+                    <yaxisside>LEFT</yaxisside>
+                    <drawtype>SINGLE_LINE</drawtype>
+                </graph_item>
+                <graph_item>
+                    <color>7C3AED</color>
+                    <item>
+                        <host>WordPress by WP Zabbix Monitor</host>
+                        <key>wordpress.matomo.sources.referral</key>
+                    </item>
+                    <yaxisside>LEFT</yaxisside>
+                    <drawtype>SINGLE_LINE</drawtype>
+                </graph_item>
+                <graph_item>
+                    <color>F59E0B</color>
+                    <item>
+                        <host>WordPress by WP Zabbix Monitor</host>
+                        <key>wordpress.matomo.sources.social</key>
+                    </item>
+                    <yaxisside>LEFT</yaxisside>
                     <drawtype>SINGLE_LINE</drawtype>
                 </graph_item>
             </graph_items>
