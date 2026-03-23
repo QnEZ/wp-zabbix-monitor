@@ -56,9 +56,23 @@ class WPZM_Sender {
 
         $enabled = $settings->get( 'enabled_metrics', array() );
         $data    = WPZM_Metrics::get_instance()->collect( $enabled );
-        $flat    = WPZM_Metrics::get_instance()->flatten( $data );
 
-        return $this->send( $server, $port, $host, $flat );
+        // Push the full metrics JSON blob to the Trapper master item.
+        // Zabbix dependent items then extract individual values via JSONPath.
+        // The key 'wordpress.metrics.push' must exist as a Trapper item on the host.
+        $json_blob = wp_json_encode( $data );
+        if ( false === $json_blob ) {
+            return array(
+                'success'   => false,
+                'message'   => 'Failed to encode metrics as JSON.',
+                'processed' => 0,
+                'failed'    => 1,
+            );
+        }
+
+        return $this->send( $server, $port, $host, array(
+            'wordpress.metrics.push' => $json_blob,
+        ) );
     }
 
     /**
