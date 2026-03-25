@@ -3,13 +3,13 @@
     <version>7.4</version>
     <template_groups>
         <template_group>
-            <uuid>2df61cf6-7304-47f3-8b97-0098e1a818e5</uuid>
+            <uuid>127ee5ad09964323a2c2fae6b372ffb6</uuid>
             <name>WordPress</name>
         </template_group>
     </template_groups>
     <templates>
         <template>
-            <uuid>25855fe3-7260-4c1d-9ec2-37d4b7ed8150</uuid>
+            <uuid>3be159fc69f9437d8b833b3058eb969a</uuid>
             <template>WordPress by WP Zabbix Monitor</template>
             <name>WordPress by WP Zabbix Monitor</name>
             <description>
@@ -105,7 +105,7 @@
             </macros>
             <items>
                 <item>
-                    <uuid>13eee9b1-2a39-4a25-8009-eb9fad756c75</uuid>
+                    <uuid>32850c4014aa4588840003b0b3ee9921</uuid>
                     <name>WordPress: Raw metrics JSON</name>
                     <type>HTTP_AGENT</type>
                     <key>wordpress.metrics.raw</key>
@@ -136,7 +136,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>f0065fa9-cea8-49ea-9b53-56a820d9cc11</uuid>
+                    <uuid>acd9621ca3394cfba3e431fe14371690</uuid>
                     <name>WordPress: Site availability</name>
                     <type>HTTP_AGENT</type>
                     <key>wordpress.ping</key>
@@ -174,7 +174,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>6797d84b-34b3-458c-99e8-6c148eaeeb2a</uuid>
+                    <uuid>1420f3b206af442786a9ba6661ae0c86</uuid>
                     <name>WordPress: Page load time</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.performance.load_time_ms</key>
@@ -200,7 +200,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>59310901-640b-4621-84cf-c58ea9eea97a</uuid>
+                    <uuid>8fbdf6218741498fb12be02118585388</uuid>
                     <name>WordPress: PHP memory usage</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.performance.memory_usage_mb</key>
@@ -226,7 +226,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>b96d19fb-fd5a-40aa-9975-28cf6ccec811</uuid>
+                    <uuid>d075cb6616e549818514051d854807b6</uuid>
                     <name>WordPress: PHP peak memory usage</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.performance.memory_peak_mb</key>
@@ -252,7 +252,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>cddc812b-d557-409f-95b3-3191ad4e6cfd</uuid>
+                    <uuid>234c87ea98e940b684154b2c36be7067</uuid>
                     <name>WordPress: Database query count</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.database.query_count</key>
@@ -277,7 +277,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>8fe4f3f7-64a3-4d22-99c1-cd7d77e1397d</uuid>
+                    <uuid>ffb3dc9829b144c9a4e64a728093d6d9</uuid>
                     <name>WordPress: Database query time</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.database.query_time_ms</key>
@@ -303,7 +303,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>85d17167-ad66-492c-8744-35482542c31a</uuid>
+                    <uuid>3af7429989764376a046c98d7469ecb3</uuid>
                     <name>WordPress: Slow database queries</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.database.slow_queries</key>
@@ -328,7 +328,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>9053512a-62ff-452d-b76c-231a8993f0fc</uuid>
+                    <uuid>5fca40ef629f4ea3a896899871f38279</uuid>
                     <name>WordPress: Database size</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.database.db_size_mb</key>
@@ -354,7 +354,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>9179220a-2914-454b-9d5e-9695e932f1f7</uuid>
+                    <uuid>29d63cf9bfcd47b3a3ff734eec76e389</uuid>
                     <name>WordPress: Autoload options size</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.database.autoload_size_kb</key>
@@ -380,7 +380,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>1ce65aaf-34ba-4345-8364-085111a3c325</uuid>
+                    <uuid>dff078274ffa43b39cc35b069934cd80</uuid>
                     <name>WordPress: Total registered users</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.users.total</key>
@@ -405,7 +405,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>267ad101-5e1b-41f5-ba1a-5dbdf2c8674a</uuid>
+                    <uuid>0d620c9e6195411f90d61f60c6aa6050</uuid>
                     <name>WordPress: New users (last 24h)</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.users.new_24h</key>
@@ -430,7 +430,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>960cf077-a7dd-4247-a69d-81e152608bc5</uuid>
+                    <uuid>edf9ad230e744545b9d322830dcfdc49</uuid>
                     <name>WordPress: Administrator count</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.users.admin_count</key>
@@ -455,7 +455,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>fa509300-cabc-4b02-86e9-03d872715003</uuid>
+                    <uuid>1f321df8a644450c96c3ca81210f84a1</uuid>
                     <name>WordPress: Published posts</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.content.published_posts</key>
@@ -480,7 +480,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>3b115ce1-dd41-46fa-a89c-c64fe7d39d12</uuid>
+                    <uuid>b0fc72a7b329473d8a2d9c1fafa89c0d</uuid>
                     <name>WordPress: Pending comments</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.content.comments_pending</key>
@@ -505,7 +505,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>3654172a-f7ea-43ca-8b43-9a40e85f6fd8</uuid>
+                    <uuid>209b81d9923148b393635dc6d15ea31b</uuid>
                     <name>WordPress: Spam comments</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.content.comments_spam</key>
@@ -530,7 +530,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>b72c5504-1dc7-4d97-9160-777c92bfbe1e</uuid>
+                    <uuid>0a9d1d96384542198589bbcdec4547fe</uuid>
                     <name>WordPress: Active plugins</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.plugins.active</key>
@@ -555,7 +555,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>0452059a-9223-43cc-8879-9abe27ac9019</uuid>
+                    <uuid>c008016892214259b526c5f6394dacde</uuid>
                     <name>WordPress: Plugin updates available</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.plugins.needs_update</key>
@@ -580,7 +580,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>296f4d83-cba4-42bf-bb6f-39d72b59e6e7</uuid>
+                    <uuid>33023ee081a1454288d662c9689f7082</uuid>
                     <name>WordPress: OPcache hit rate</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.php.opcache_hit_rate</key>
@@ -606,7 +606,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>d3c2a272-cb43-44b8-9465-07cf169f5da8</uuid>
+                    <uuid>c16ae36d7d324b3a862650616dc56934</uuid>
                     <name>WordPress: OPcache enabled</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.php.opcache_enabled</key>
@@ -631,7 +631,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>ca0ec97d-9919-45b0-9657-632654dd3c6e</uuid>
+                    <uuid>e0e092457c5e4ead85a68c36efa1dafd</uuid>
                     <name>WordPress: Disk used percentage</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.server.disk_used_pct</key>
@@ -657,7 +657,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>c02de686-84a5-4b7a-a971-6b106cd27bd1</uuid>
+                    <uuid>b97665fc6b66411ea53549f26fd3a010</uuid>
                     <name>WordPress: Disk free space</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.server.disk_free_gb</key>
@@ -683,7 +683,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>597150a8-292a-4ca0-b8b6-6c5a7dddda01</uuid>
+                    <uuid>9905a15b72e04604b0b55b21af03db0f</uuid>
                     <name>WordPress: WP_DEBUG enabled</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.server.wp_debug</key>
@@ -708,7 +708,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>eccb1386-416d-4605-9409-b57163f0d139</uuid>
+                    <uuid>ef9673a138a744e0828950bd8cef26ba</uuid>
                     <name>WordPress: Overdue cron events</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.cron.overdue_events</key>
@@ -733,7 +733,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>f9e73d34-c652-459d-9f87-79f3815acc81</uuid>
+                    <uuid>98ebc14a42cb4f48af5d29f7d437bc83</uuid>
                     <name>WordPress: Total cron events</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.cron.total_events</key>
@@ -758,7 +758,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>7eee4de0-a4cd-40ff-b37c-6fcd304d229e</uuid>
+                    <uuid>08a53f55b97845d3919e6ce76a77e0f1</uuid>
                     <name>WooCommerce: Orders placed today</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.orders_total_today</key>
@@ -789,7 +789,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>1452fdfb-4185-4bfe-bdb9-f4ec1f84454c</uuid>
+                    <uuid>51a63676d0d54c2ca4f46cd891e80975</uuid>
                     <name>WooCommerce: Orders placed this week</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.orders_total_week</key>
@@ -820,7 +820,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>b6d418db-7b06-409b-9b09-ab76ef8dd6fa</uuid>
+                    <uuid>51b676a23a264a3b9362f8857ee1fc91</uuid>
                     <name>WooCommerce: Orders per hour (rolling)</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.orders_per_hour</key>
@@ -851,7 +851,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>1d396252-f592-44ea-b79a-e4aecfa830e1</uuid>
+                    <uuid>c114dc24e1174b7aaf9a05b8158cd182</uuid>
                     <name>WooCommerce: Pending orders</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.orders_pending</key>
@@ -882,7 +882,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>5e8cd41d-84fd-46d0-8bec-ee39a0b60fa0</uuid>
+                    <uuid>6889adab24ec4ac0850211bb9239f025</uuid>
                     <name>WooCommerce: Processing orders</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.orders_processing</key>
@@ -913,7 +913,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>6dc05b96-5e66-48d3-b0d2-90b6276f393f</uuid>
+                    <uuid>67ea2f54321f4293b41c968f53b567de</uuid>
                     <name>WooCommerce: Failed orders</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.orders_failed</key>
@@ -944,7 +944,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>f7ee763b-dfb7-4e6a-bff1-51ab1334fcc6</uuid>
+                    <uuid>395a9ee9b7ad49f2a3509f397883eb90</uuid>
                     <name>WooCommerce: Revenue today</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.revenue_today</key>
@@ -976,7 +976,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>480b7a0c-0379-422c-9c4c-9deaf5217ad6</uuid>
+                    <uuid>39a63a16f5ed414a89f3335dddc4c55e</uuid>
                     <name>WooCommerce: Revenue this week</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.revenue_week</key>
@@ -1008,7 +1008,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>dcba842c-09f8-4f46-9c6c-87bbe8631adf</uuid>
+                    <uuid>91029ebaf84545db8dcba748001400de</uuid>
                     <name>WooCommerce: Average order value (30 days)</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.revenue_avg_order</key>
@@ -1040,7 +1040,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>9868cd9b-dfff-430e-a36e-f5b31fdb0299</uuid>
+                    <uuid>50959cd3e34147a984726def1f224992</uuid>
                     <name>WooCommerce: Abandoned cart sessions (24h)</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.cart_abandoned_sessions</key>
@@ -1071,7 +1071,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>91a34bf7-c380-45bc-b3ec-30ca04656b09</uuid>
+                    <uuid>c57a1a9c56b74b4fa0531248fdee90a3</uuid>
                     <name>WooCommerce: Total published products</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.products_total</key>
@@ -1102,7 +1102,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>7c8ee625-8c0b-40a4-8b56-34ed4df59fe8</uuid>
+                    <uuid>b63386f5c1a247ff993838f057ee2ac7</uuid>
                     <name>WooCommerce: Products out of stock</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.products_out_of_stock</key>
@@ -1133,7 +1133,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>255d7bd5-1561-4a97-8d0c-14c00aefefc1</uuid>
+                    <uuid>fcbf4b397f54409f9c21b55a00f13947</uuid>
                     <name>WooCommerce: Products below low-stock threshold</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.products_low_stock</key>
@@ -1164,7 +1164,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>7d78b87d-1818-4b04-b47e-e45bb6c40f5c</uuid>
+                    <uuid>abad68b6703948a7be64edeb1b99b546</uuid>
                     <name>WooCommerce: Total customers</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.customers_total</key>
@@ -1195,7 +1195,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>00142957-9a40-4be2-a903-9468e4554936</uuid>
+                    <uuid>0abc901b0fdf4e948cce70edfcdd1b9f</uuid>
                     <name>WooCommerce: New customers today</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.customers_new_today</key>
@@ -1226,7 +1226,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>39b52192-28fb-4e42-bbca-7ef71d2c32ee</uuid>
+                    <uuid>afd8c85140864a488ab7e487209994f5</uuid>
                     <name>WooCommerce: Pending product reviews</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.woocommerce.reviews_pending</key>
@@ -1258,7 +1258,7 @@
                 </item>
 
                 <item>
-                    <uuid>8f70e003-903a-4ced-af7d-952e2ab578ef</uuid>
+                    <uuid>1260aac4971e488a99c6f0f51e40a5e4</uuid>
                     <name>Matomo: Site pageviews (today)</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.matomo.site.pageviews</key>
@@ -1283,7 +1283,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>a7cfc8ce-a794-48d1-9042-7c085157d8ff</uuid>
+                    <uuid>2a233e87b9b24a68af0578b990ed45d1</uuid>
                     <name>Matomo: Unique visitors (today)</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.matomo.site.unique_visitors</key>
@@ -1308,7 +1308,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>b86fabfa-d2f6-4d88-8d1b-c1a31a0bd88c</uuid>
+                    <uuid>c32c208809594bf79398e47e1bfe59e6</uuid>
                     <name>Matomo: Bounce rate (%)</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.matomo.site.bounce_rate_pct</key>
@@ -1334,7 +1334,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>86b033f9-1826-46d3-ba8c-1c8b69f062e4</uuid>
+                    <uuid>f0f3988265ca45808d404e19ce359de5</uuid>
                     <name>Matomo: Avg session duration (sec)</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.matomo.site.avg_session_duration_sec</key>
@@ -1360,7 +1360,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>ec97eb39-9340-48cf-ba4e-982fc51d3b49</uuid>
+                    <uuid>16666e93c6244b75bd19740177eeaddf</uuid>
                     <name>Matomo: Traffic - Direct</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.matomo.sources.direct</key>
@@ -1385,7 +1385,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>c1eb948f-a6d9-4083-ae41-5c716e30b276</uuid>
+                    <uuid>dd2d7b5ba937435c85c831dc7c75254f</uuid>
                     <name>Matomo: Traffic - Organic</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.matomo.sources.organic</key>
@@ -1410,7 +1410,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>7f8d44ca-ff86-432f-8229-f52a3b65162c</uuid>
+                    <uuid>c63c7b698a5146f3b8cc13e15fa26532</uuid>
                     <name>Matomo: Traffic - Referral</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.matomo.sources.referral</key>
@@ -1435,7 +1435,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>9d88c690-8709-40ac-89b3-d3de5c3e73bd</uuid>
+                    <uuid>836ceb2d55b64cf8b29ce27293b59778</uuid>
                     <name>Matomo: Traffic - Social</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.matomo.sources.social</key>
@@ -1460,7 +1460,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>a0171209-37ba-4626-8750-a2c41cf17189</uuid>
+                    <uuid>f40b307634ef4ac48d153e0759427759</uuid>
                     <name>Matomo: Traffic - Campaigns</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.matomo.sources.campaigns</key>
@@ -1485,7 +1485,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>0073ab22-1631-4f9e-a360-179873432aab</uuid>
+                    <uuid>d9b8d08aa7cf4b12b5b0330532f476dc</uuid>
                     <name>Matomo: Top page 1 hits</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.matomo.top_pages.page_1_hits</key>
@@ -1510,7 +1510,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>508ca782-1903-4597-9f34-88cd77f4e591</uuid>
+                    <uuid>63e97004cbc144cfb33031051ae21800</uuid>
                     <name>Matomo: Top page 2 hits</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.matomo.top_pages.page_2_hits</key>
@@ -1535,7 +1535,7 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>9ef76508-f627-4ec3-9758-dee0c4a8ef2d</uuid>
+                    <uuid>2a95785a61064cbebe6bd66486dfa220</uuid>
                     <name>Matomo: Top page 3 hits</name>
                     <type>DEPENDENT</type>
                     <key>wordpress.matomo.top_pages.page_3_hits</key>
@@ -1562,7 +1562,7 @@
             </items>
             <dashboards>
                 <dashboard>
-                    <uuid>17e58ed8-39cd-40d5-8b33-238846adf85c</uuid>
+                    <uuid>68440a1b365b428c946a48fb23c1548c</uuid>
                     <name>WordPress Overview</name>
                     <display_period>30</display_period>
                     <auto_start>YES</auto_start>
@@ -1669,7 +1669,7 @@
             </dashboards>
             <valuemaps>
                 <valuemap>
-                    <uuid>6670b0e1-9255-4745-aec7-795e67733da7</uuid>
+                    <uuid>a4236ccf786748028822edeb1e6a461d</uuid>
                     <name>Service state</name>
                     <mappings>
                         <mapping>
@@ -1689,7 +1689,7 @@
         </triggers>
     <graphs>
         <graph>
-            <uuid>f5d50602-e4e2-4399-a564-4816fa52f4b8</uuid>
+            <uuid>e9658c8219d8443aa3a8f671031b1db4</uuid>
             <name>WordPress: Performance Overview</name>
             <width>900</width>
             <height>200</height>
@@ -1715,7 +1715,7 @@
             </graph_items>
         </graph>
         <graph>
-            <uuid>cce5f591-42aa-45c2-9331-6a2075b85098</uuid>
+            <uuid>f5ecf2b224224d5292717350e35214d6</uuid>
             <name>WordPress: Database Activity</name>
             <width>900</width>
             <height>200</height>
@@ -1750,7 +1750,7 @@
             </graph_items>
         </graph>
         <graph>
-            <uuid>22985933-6e84-4c92-8391-bdf355a7ca2a</uuid>
+            <uuid>6fc8abe3670c464ca92cf830a3772c85</uuid>
             <name>WordPress: User Growth</name>
             <width>900</width>
             <height>200</height>
@@ -1776,7 +1776,7 @@
             </graph_items>
         </graph>
         <graph>
-            <uuid>fe53dbf8-85a3-4405-aa89-c8eb862d9814</uuid>
+            <uuid>ee69427933054f8aaf670df191be15ae</uuid>
             <name>WordPress: Disk Usage</name>
             <width>900</width>
             <height>200</height>
@@ -1802,7 +1802,7 @@
             </graph_items>
         </graph>
         <graph>
-            <uuid>b30b65ed-cb02-4a7b-a00e-03da248e37be</uuid>
+            <uuid>bbce38af2d8147a797b31a17c85c6ba1</uuid>
             <name>WordPress: OPcache Hit Rate</name>
             <width>900</width>
             <height>200</height>
@@ -1819,7 +1819,7 @@
             </graph_items>
         </graph>
         <graph>
-            <uuid>e5e80faf-2f79-4bff-8fdc-91a7afe46993</uuid>
+            <uuid>de948240a0664fdfbe49f221c37abc88</uuid>
             <name>WordPress: Database Size Growth</name>
             <width>900</width>
             <height>200</height>
@@ -1845,7 +1845,7 @@
             </graph_items>
         </graph>
         <graph>
-            <uuid>ba31bcee-770b-4264-a21e-084bf21b95b8</uuid>
+            <uuid>2c7210921f1e40f7a76beaa777d57d13</uuid>
             <name>WooCommerce: Sales Overview</name>
             <width>900</width>
             <height>200</height>
@@ -1880,7 +1880,7 @@
             </graph_items>
         </graph>
         <graph>
-            <uuid>7aed408f-49a9-4742-a267-619e733ae68e</uuid>
+            <uuid>f686be0042ea42cbaa64634a33dd7517</uuid>
             <name>WooCommerce: Inventory Status</name>
             <width>900</width>
             <height>200</height>
@@ -1915,7 +1915,7 @@
             </graph_items>
         </graph>
         <graph>
-            <uuid>86222786-59de-4a6c-9ed9-3d6fdbf874ff</uuid>
+            <uuid>0d2bdc0f49014857a92bd867263512e1</uuid>
             <name>Matomo: Traffic &amp; Engagement</name>
             <width>900</width>
             <height>200</height>
@@ -1950,7 +1950,7 @@
             </graph_items>
         </graph>
         <graph>
-            <uuid>91839be6-5005-4981-872f-88faaab1f739</uuid>
+            <uuid>92b72333ef9645d1924caec4f0a76bfa</uuid>
             <name>Matomo: Traffic Sources</name>
             <width>900</width>
             <height>200</height>
