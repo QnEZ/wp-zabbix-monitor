@@ -1789,7 +1789,7 @@
             <uuid>178875a1e7504b908f351c6e12e4a30f</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.plugins.needs_update)&gt;={$WP_PLUGIN_UPDATES_WARN}</expression>
             <name>WordPress: Plugin updates available ({ITEM.LASTVALUE} pending)</name>
-            <priority>INFO</priority>
+            <priority>INFORMATION</priority>
             <description>One or more plugins have updates available. Update promptly to maintain security.</description>
             <tags>
                 <tag>
@@ -1892,7 +1892,7 @@
             <uuid>7f59a2be99a74452bd8e9484372095a3</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.products_low_stock)&gt;{$WP_WC_LOW_STOCK_WARN}</expression>
             <name>WooCommerce: Multiple products below low-stock threshold ({ITEM.LASTVALUE})</name>
-            <priority>INFO</priority>
+            <priority>INFORMATION</priority>
             <description>Several products are running low on stock and may need restocking soon.</description>
             <tags>
                 <tag>
@@ -1909,7 +1909,7 @@
             <uuid>9866476413de426b88be94f07cdd6208</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.cart_abandoned_sessions)&gt;{$WP_WC_ABANDONED_CARTS_WARN}</expression>
             <name>WooCommerce: High abandoned cart count ({ITEM.LASTVALUE} sessions)</name>
-            <priority>INFO</priority>
+            <priority>INFORMATION</priority>
             <description>A large number of sessions have items in the cart but have not completed checkout in the last 24 hours.</description>
             <tags>
                 <tag>
@@ -1926,7 +1926,7 @@
             <uuid>a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.matomo.site.pageviews)&lt;10</expression>
             <name>Matomo: Low traffic detected (pageviews &lt; 10)</name>
-            <priority>INFO</priority>
+            <priority>INFORMATION</priority>
             <description>Site pageviews are unusually low. This may indicate a traffic drop or tracking issue.</description>
             <tags>
                 <tag>
@@ -1943,7 +1943,7 @@
             <uuid>b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.matomo.site.bounce_rate_pct)&gt;70</expression>
             <name>Matomo: High bounce rate detected (&gt; 70%)</name>
-            <priority>WARN</priority>
+            <priority>WARNING</priority>
             <description>Bounce rate is elevated. Users may not be finding relevant content or experiencing issues.</description>
             <tags>
                 <tag>
@@ -1960,7 +1960,7 @@
             <uuid>c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.matomo.site.avg_session_duration_sec)&lt;30</expression>
             <name>Matomo: Low average session duration (&lt; 30 sec)</name>
-            <priority>INFO</priority>
+            <priority>INFORMATION</priority>
             <description>Users are spending very little time on the site. Content may not be engaging or navigation may be confusing.</description>
             <tags>
                 <tag>
