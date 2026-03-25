@@ -1690,7 +1690,7 @@
             <uuid>d14768cd8a7046aa8d36a75a61ccf831</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.ping)=0</expression>
             <name>WordPress: Site is unreachable</name>
-            <priority>HIGH</priority>
+            <priority>4</priority>
             <description>The WordPress REST API ping endpoint returned an error or the site is down.</description>
             <tags>
                 <tag>
@@ -1703,7 +1703,7 @@
             <uuid>8f2bd21f323945f9b77f2634486e732d</uuid>
             <expression>avg(/WordPress by WP Zabbix Monitor/wordpress.performance.load_time_ms,5m)&gt;{$WP_LOAD_TIME_HIGH}</expression>
             <name>WordPress: Page load time is critically high (avg &gt; {$WP_LOAD_TIME_HIGH}ms)</name>
-            <priority>HIGH</priority>
+            <priority>4</priority>
             <description>Average page load time over 5 minutes exceeds the critical threshold.</description>
             <tags>
                 <tag>
@@ -1716,7 +1716,7 @@
             <uuid>4bf081f883474bb1bc58b57337293d2f</uuid>
             <expression>avg(/WordPress by WP Zabbix Monitor/wordpress.performance.load_time_ms,5m)&gt;{$WP_LOAD_TIME_WARN}</expression>
             <name>WordPress: Page load time is elevated (avg &gt; {$WP_LOAD_TIME_WARN}ms)</name>
-            <priority>WARNING</priority>
+            <priority>2</priority>
             <dependencies>
                 <dependency>
                     <name>WordPress: Page load time is critically high (avg &gt; {$WP_LOAD_TIME_HIGH}ms)</name>
@@ -1734,7 +1734,7 @@
             <uuid>2d2866955bba46d6a98c1395283a433b</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.database.slow_queries)&gt;0</expression>
             <name>WordPress: Slow database queries detected</name>
-            <priority>WARNING</priority>
+            <priority>2</priority>
             <description>One or more database queries exceeded 50ms on the last page load.</description>
             <tags>
                 <tag>
@@ -1747,7 +1747,7 @@
             <uuid>01e13905298c4913b0e32f7421a4ea6e</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.database.query_count)&gt;{$WP_DB_QUERY_WARN}</expression>
             <name>WordPress: High database query count (&gt; {$WP_DB_QUERY_WARN} per request)</name>
-            <priority>WARNING</priority>
+            <priority>2</priority>
             <tags>
                 <tag>
                     <tag>scope</tag>
@@ -1759,7 +1759,7 @@
             <uuid>cda3019b2c5c492398782bcd64725b2c</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.server.disk_used_pct)&gt;{$WP_DISK_HIGH}</expression>
             <name>WordPress: Disk usage is critically high (&gt; {$WP_DISK_HIGH}%)</name>
-            <priority>HIGH</priority>
+            <priority>4</priority>
             <tags>
                 <tag>
                     <tag>scope</tag>
@@ -1771,7 +1771,7 @@
             <uuid>78533d8f018c47beb7e112c151062c1a</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.server.disk_used_pct)&gt;{$WP_DISK_WARN}</expression>
             <name>WordPress: Disk usage is elevated (&gt; {$WP_DISK_WARN}%)</name>
-            <priority>WARNING</priority>
+            <priority>2</priority>
             <dependencies>
                 <dependency>
                     <name>WordPress: Disk usage is critically high (&gt; {$WP_DISK_HIGH}%)</name>
@@ -1789,7 +1789,7 @@
             <uuid>178875a1e7504b908f351c6e12e4a30f</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.plugins.needs_update)&gt;={$WP_PLUGIN_UPDATES_WARN}</expression>
             <name>WordPress: Plugin updates available ({ITEM.LASTVALUE} pending)</name>
-            <priority>INFORMATION</priority>
+            <priority>1</priority>
             <description>One or more plugins have updates available. Update promptly to maintain security.</description>
             <tags>
                 <tag>
@@ -1802,7 +1802,7 @@
             <uuid>4c43e7b72021472698cb75f7a62ce893</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.cron.overdue_events)&gt;={$WP_OVERDUE_CRON_WARN}</expression>
             <name>WordPress: Cron events are overdue ({ITEM.LASTVALUE} events)</name>
-            <priority>WARNING</priority>
+            <priority>2</priority>
             <description>WP-Cron has overdue events. This may indicate the cron system is not running correctly.</description>
             <tags>
                 <tag>
@@ -1815,7 +1815,7 @@
             <uuid>28dbc6cf783b4a35af1284638782cd21</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.server.wp_debug)=1</expression>
             <name>WordPress: WP_DEBUG is enabled in production</name>
-            <priority>WARNING</priority>
+            <priority>2</priority>
             <description>WP_DEBUG is enabled. This should be disabled on production sites to prevent information disclosure.</description>
             <tags>
                 <tag>
@@ -1828,7 +1828,7 @@
             <uuid>7e67a2f9e3e0460ba8bd50b74e1f5ff7</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.php.opcache_enabled)=0</expression>
             <name>WordPress: PHP OPcache is disabled</name>
-            <priority>WARNING</priority>
+            <priority>2</priority>
             <description>OPcache is not enabled. Enabling OPcache significantly improves WordPress performance.</description>
             <tags>
                 <tag>
@@ -1841,7 +1841,7 @@
             <uuid>74e8cc49e86a4c7288402684edd8abe8</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.orders_failed)&gt;{$WP_WC_FAILED_ORDERS_WARN}</expression>
             <name>WooCommerce: High number of failed orders ({ITEM.LASTVALUE})</name>
-            <priority>WARNING</priority>
+            <priority>2</priority>
             <description>The number of failed orders has exceeded the warning threshold. This may indicate a payment gateway issue.</description>
             <tags>
                 <tag>
@@ -1858,7 +1858,7 @@
             <uuid>f9e03ed0fb104e0185dca29c0c35f585</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.orders_pending)&gt;{$WP_WC_PENDING_ORDERS_WARN}</expression>
             <name>WooCommerce: High number of pending orders ({ITEM.LASTVALUE})</name>
-            <priority>WARNING</priority>
+            <priority>2</priority>
             <description>Pending orders have exceeded the warning threshold. Orders may be stuck awaiting payment confirmation.</description>
             <tags>
                 <tag>
@@ -1875,7 +1875,7 @@
             <uuid>eee1ec1391194dcf98cdd7a1d1bc7fe8</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.products_out_of_stock)&gt;{$WP_WC_OUT_OF_STOCK_WARN}</expression>
             <name>WooCommerce: Multiple products out of stock ({ITEM.LASTVALUE})</name>
-            <priority>WARNING</priority>
+            <priority>2</priority>
             <description>The number of out-of-stock products has exceeded the warning threshold.</description>
             <tags>
                 <tag>
@@ -1892,7 +1892,7 @@
             <uuid>7f59a2be99a74452bd8e9484372095a3</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.products_low_stock)&gt;{$WP_WC_LOW_STOCK_WARN}</expression>
             <name>WooCommerce: Multiple products below low-stock threshold ({ITEM.LASTVALUE})</name>
-            <priority>INFORMATION</priority>
+            <priority>1</priority>
             <description>Several products are running low on stock and may need restocking soon.</description>
             <tags>
                 <tag>
@@ -1909,7 +1909,7 @@
             <uuid>9866476413de426b88be94f07cdd6208</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.woocommerce.cart_abandoned_sessions)&gt;{$WP_WC_ABANDONED_CARTS_WARN}</expression>
             <name>WooCommerce: High abandoned cart count ({ITEM.LASTVALUE} sessions)</name>
-            <priority>INFORMATION</priority>
+            <priority>1</priority>
             <description>A large number of sessions have items in the cart but have not completed checkout in the last 24 hours.</description>
             <tags>
                 <tag>
@@ -1926,7 +1926,7 @@
             <uuid>a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.matomo.site.pageviews)&lt;10</expression>
             <name>Matomo: Low traffic detected (pageviews &lt; 10)</name>
-            <priority>INFORMATION</priority>
+            <priority>1</priority>
             <description>Site pageviews are unusually low. This may indicate a traffic drop or tracking issue.</description>
             <tags>
                 <tag>
@@ -1943,7 +1943,7 @@
             <uuid>b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.matomo.site.bounce_rate_pct)&gt;70</expression>
             <name>Matomo: High bounce rate detected (&gt; 70%)</name>
-            <priority>WARNING</priority>
+            <priority>2</priority>
             <description>Bounce rate is elevated. Users may not be finding relevant content or experiencing issues.</description>
             <tags>
                 <tag>
@@ -1960,7 +1960,7 @@
             <uuid>c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8</uuid>
             <expression>last(/WordPress by WP Zabbix Monitor/wordpress.matomo.site.avg_session_duration_sec)&lt;30</expression>
             <name>Matomo: Low average session duration (&lt; 30 sec)</name>
-            <priority>INFORMATION</priority>
+            <priority>1</priority>
             <description>Users are spending very little time on the site. Content may not be engaging or navigation may be confusing.</description>
             <tags>
                 <tag>
