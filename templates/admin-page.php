@@ -22,6 +22,7 @@ $groups = array(
     'server'      => __( 'Server', 'wp-zabbix-monitor' ),
     'cron'        => __( 'Cron', 'wp-zabbix-monitor' ),
     'woocommerce' => __( 'WooCommerce', 'wp-zabbix-monitor' ),
+    'matomo'      => __( 'Matomo Analytics', 'wp-zabbix-monitor' ),
 );
 
 $enabled_metrics = $settings['enabled_metrics'] ?? array_keys( $groups );
@@ -40,6 +41,7 @@ $enabled_metrics = $settings['enabled_metrics'] ?? array_keys( $groups );
         <button class="wpzm-tab" data-tab="connection"><?php esc_html_e( 'Zabbix Connection', 'wp-zabbix-monitor' ); ?></button>
         <button class="wpzm-tab" data-tab="api"><?php esc_html_e( 'REST API', 'wp-zabbix-monitor' ); ?></button>
         <button class="wpzm-tab" data-tab="metrics"><?php esc_html_e( 'Metrics', 'wp-zabbix-monitor' ); ?></button>
+        <button class="wpzm-tab" data-tab="matomo"><?php esc_html_e( 'Matomo', 'wp-zabbix-monitor' ); ?></button>
         <button class="wpzm-tab" data-tab="live"><?php esc_html_e( 'Live Data', 'wp-zabbix-monitor' ); ?></button>
         <button class="wpzm-tab wpzm-tab-provision" data-tab="provision"><?php esc_html_e( '⚡ Auto-Provision', 'wp-zabbix-monitor' ); ?></button>
     </div>
@@ -260,6 +262,89 @@ $enabled_metrics = $settings['enabled_metrics'] ?? array_keys( $groups );
             </div>
 
             <?php submit_button( __( 'Save Metric Settings', 'wp-zabbix-monitor' ) ); ?>
+        </div>
+
+        <!-- ── Tab: Matomo ────────────────────────────────────────────────── -->
+        <div id="wpzm-tab-matomo" class="wpzm-tab-content">
+
+            <div class="wpzm-card">
+                <h2><span class="dashicons dashicons-chart-bar"></span>
+                    <?php esc_html_e( 'Matomo Analytics Integration', 'wp-zabbix-monitor' ); ?>
+                </h2>
+                <p class="description">
+                    <?php esc_html_e( 'Connect to your self-hosted Matomo instance to collect traffic and engagement metrics alongside WordPress performance data.', 'wp-zabbix-monitor' ); ?>
+                </p>
+
+                <table class="form-table wpzm-form-table">
+                    <tr>
+                        <th scope="row">
+                            <label for="wpzm-matomo-url"><?php esc_html_e( 'Matomo URL', 'wp-zabbix-monitor' ); ?></label>
+                        </th>
+                        <td>
+                            <input type="url" id="wpzm-matomo-url"
+                                   name="<?php echo esc_attr( WPZM_OPTION_KEY ); ?>[matomo_url]"
+                                   value="<?php echo esc_attr( $settings['matomo_url'] ?? '' ); ?>"
+                                   placeholder="https://stats.example.com"
+                                   class="regular-text" />
+                            <p class="description"><?php esc_html_e( 'Full URL to your Matomo installation (e.g., https://stats.qnez.net). Must be accessible from this WordPress server.', 'wp-zabbix-monitor' ); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="wpzm-matomo-token"><?php esc_html_e( 'API Token', 'wp-zabbix-monitor' ); ?></label>
+                        </th>
+                        <td>
+                            <input type="password" id="wpzm-matomo-token"
+                                   name="<?php echo esc_attr( WPZM_OPTION_KEY ); ?>[matomo_token]"
+                                   value="<?php echo esc_attr( $settings['matomo_token'] ?? '' ); ?>"
+                                   placeholder="Your Matomo API token"
+                                   class="regular-text" />
+                            <p class="description"><?php esc_html_e( 'Generate this in Matomo: Settings → Personal → API Tokens. Use a token with at least View access to your site.', 'wp-zabbix-monitor' ); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="wpzm-matomo-site-id"><?php esc_html_e( 'Site ID', 'wp-zabbix-monitor' ); ?></label>
+                        </th>
+                        <td>
+                            <input type="number" id="wpzm-matomo-site-id"
+                                   name="<?php echo esc_attr( WPZM_OPTION_KEY ); ?>[matomo_site_id]"
+                                   value="<?php echo esc_attr( $settings['matomo_site_id'] ?? 1 ); ?>"
+                                   min="1" class="small-text" />
+                            <p class="description"><?php esc_html_e( 'The Matomo site ID for this WordPress installation. Usually 1 for the first site. Find it in Matomo: Administration → Websites.', 'wp-zabbix-monitor' ); ?></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="wpzm-card">
+                <h2><?php esc_html_e( 'Matomo Metrics Collected', 'wp-zabbix-monitor' ); ?></h2>
+                <p class="description"><?php esc_html_e( 'When enabled in the Metrics tab, the following Matomo data is collected every push cycle:', 'wp-zabbix-monitor' ); ?></p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong><?php esc_html_e( 'Site Level:', 'wp-zabbix-monitor' ); ?></strong>
+                        <ul style="margin-left: 20px;">
+                            <li><?php esc_html_e( 'Total pageviews (today)', 'wp-zabbix-monitor' ); ?></li>
+                            <li><?php esc_html_e( 'Unique visitors (today)', 'wp-zabbix-monitor' ); ?></li>
+                            <li><?php esc_html_e( 'Bounce rate (%)', 'wp-zabbix-monitor' ); ?></li>
+                            <li><?php esc_html_e( 'Average session duration (seconds)', 'wp-zabbix-monitor' ); ?></li>
+                        </ul>
+                    </li>
+                    <li><strong><?php esc_html_e( 'Traffic Sources:', 'wp-zabbix-monitor' ); ?></strong>
+                        <ul style="margin-left: 20px;">
+                            <li><?php esc_html_e( 'Direct visits', 'wp-zabbix-monitor' ); ?></li>
+                            <li><?php esc_html_e( 'Organic search', 'wp-zabbix-monitor' ); ?></li>
+                            <li><?php esc_html_e( 'Referral traffic', 'wp-zabbix-monitor' ); ?></li>
+                        </ul>
+                    </li>
+                    <li><strong><?php esc_html_e( 'Top Pages:', 'wp-zabbix-monitor' ); ?></strong>
+                        <ul style="margin-left: 20px;">
+                            <li><?php esc_html_e( 'Visit counts for top 5 most-visited pages', 'wp-zabbix-monitor' ); ?></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <?php submit_button( __( 'Save Matomo Settings', 'wp-zabbix-monitor' ) ); ?>
         </div>
 
         <!-- ── Tab: Live Data ─────────────────────────────────────────────── -->
