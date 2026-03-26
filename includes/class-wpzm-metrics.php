@@ -77,8 +77,9 @@ class WPZM_Metrics {
     }
 
     /**
-     * Flatten collected metrics into a key→value map suitable for Zabbix sender.
-     * Keys follow the pattern: wordpress.<group>.<metric>
+     * Flatten collected metrics into a key->value map suitable for Zabbix sender.
+     * Keys follow the pattern: wordpress.<group>.<metric> or wordpress.<group>.<subgroup>.<metric>
+     * Recursively flattens nested arrays.
      *
      * @param array<string,mixed> $data Output of collect().
      * @return array<string,int|float|string>
@@ -89,13 +90,26 @@ class WPZM_Metrics {
             if ( ! is_array( $values ) ) {
                 continue;
             }
-            foreach ( $values as $metric => $value ) {
-                if ( is_scalar( $value ) ) {
-                    $flat[ "wordpress.{$group}.{$metric}" ] = $value;
-                }
-            }
+            $this->flatten_recursive( $values, "wordpress.{$group}", $flat );
         }
         return $flat;
+    }
+
+    /**
+     * Recursively flatten nested arrays.
+     *
+     * @param array<string,mixed> $data
+     * @param string $prefix
+     * @param array<string,int|float|string> &$flat
+     */
+    private function flatten_recursive( array $data, string $prefix, array &$flat ): void {
+        foreach ( $data as $key => $value ) {
+            if ( is_scalar( $value ) ) {
+                $flat[ "{$prefix}.{$key}" ] = $value;
+            } elseif ( is_array( $value ) ) {
+                $this->flatten_recursive( $value, "{$prefix}.{$key}", $flat );
+            }
+        }
     }
 
     // ─── Metric groups ────────────────────────────────────────────────────────
