@@ -2,6 +2,21 @@
 
 All notable changes to WP Zabbix Monitor will be documented in this file.
 
+## [1.3.2] - 2026-03-26
+
+### Fixed
+- **Matomo metrics flattening**: Fixed flatten() method to recursively handle nested arrays
+  - Matomo data structure (site, sources, top_pages) now properly flattened for Zabbix Sender
+  - Keys now follow pattern: wordpress.matomo.site.pageviews, wordpress.matomo.sources.direct, etc.
+  - Nested arrays no longer skipped during flattening process
+
+### Technical Details
+- Added flatten_recursive() private method for recursive array flattening
+- Matomo metrics now properly sent to Zabbix with correct key names
+- All nested metric groups (Matomo, WooCommerce, etc.) now supported
+
+---
+
 ## [1.3.1] - 2026-03-26
 
 ### Fixed
