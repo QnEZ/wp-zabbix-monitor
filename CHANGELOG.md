@@ -2,6 +2,21 @@
 
 All notable changes to WP Zabbix Monitor will be documented in this file.
 
+## [1.3.1] - 2026-03-26
+
+### Fixed
+- **Admin UI**: Added missing Matomo settings tab to WordPress admin page
+  - Matomo URL, API Token, and Site ID configuration fields now visible
+  - Matomo metrics documentation and collection info displayed
+  - Settings properly saved and validated
+
+### Technical Details
+- Updated admin-page.php template with Matomo tab and form fields
+- Matomo group added to enabled_metrics checkboxes
+- All Matomo settings properly integrated into settings form
+
+---
+
 ## [1.3.0] - 2026-03-23
 
 ### Added
