@@ -43,6 +43,7 @@ $enabled_metrics = $settings['enabled_metrics'] ?? array_keys( $groups );
         <button class="wpzm-tab" data-tab="metrics"><?php esc_html_e( 'Metrics', 'wp-zabbix-monitor' ); ?></button>
         <button class="wpzm-tab" data-tab="matomo"><?php esc_html_e( 'Matomo', 'wp-zabbix-monitor' ); ?></button>
         <button class="wpzm-tab" data-tab="live"><?php esc_html_e( 'Live Data', 'wp-zabbix-monitor' ); ?></button>
+        <button class="wpzm-tab" data-tab="updates"><?php esc_html_e( 'Updates', 'wp-zabbix-monitor' ); ?></button>
         <button class="wpzm-tab wpzm-tab-provision" data-tab="provision"><?php esc_html_e( '⚡ Auto-Provision', 'wp-zabbix-monitor' ); ?></button>
     </div>
 
@@ -507,11 +508,67 @@ $enabled_metrics = $settings['enabled_metrics'] ?? array_keys( $groups );
                 </div>
             </div>
 
-        </div><!-- /live tab -->
+           </div><!-- /live tab -->
 
-    </form>
+        <!-- ── Tab: Updates ────────────────────────────────────────────────── -->
+        <div id="wpzm-tab-updates" class="wpzm-tab-content">
 
-    <!-- ── Tab: Auto-Provision (outside form — uses AJAX only) ──────────── -->
+            <div class="wpzm-card">
+                <h2><span class="dashicons dashicons-update"></span>
+                    <?php esc_html_e( 'Plugin Updates', 'wp-zabbix-monitor' ); ?>
+                </h2>
+                <p class="description">
+                    <?php esc_html_e( 'WP Zabbix Monitor checks GitHub for new releases automatically. Updates are displayed in the Plugins page and can be installed with one click.', 'wp-zabbix-monitor' ); ?>
+                </p>
+
+                <table class="form-table wpzm-form-table">
+                    <tr>
+                        <th scope="row"><?php esc_html_e( 'Current Version', 'wp-zabbix-monitor' ); ?></th>
+                        <td>
+                            <strong><?php echo esc_html( WPZM_VERSION ); ?></strong>
+                            <p class="description"><?php esc_html_e( 'You are running the latest version.', 'wp-zabbix-monitor' ); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php esc_html_e( 'Update Source', 'wp-zabbix-monitor' ); ?></th>
+                        <td>
+                            <strong><?php esc_html_e( 'GitHub Releases', 'wp-zabbix-monitor' ); ?></strong>
+                            <p class="description"><?php esc_html_e( 'Updates are fetched from: ', 'wp-zabbix-monitor' ); ?><a href="https://github.com/QnEZ/wp-zabbix-monitor/releases" target="_blank" rel="noopener">github.com/QnEZ/wp-zabbix-monitor/releases</a></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php esc_html_e( 'Check Frequency', 'wp-zabbix-monitor' ); ?></th>
+                        <td>
+                            <strong><?php esc_html_e( 'Every 12 hours', 'wp-zabbix-monitor' ); ?></strong>
+                            <p class="description"><?php esc_html_e( 'WordPress checks for updates automatically. Updates are cached for 12 hours to reduce API calls.', 'wp-zabbix-monitor' ); ?></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="wpzm-card">
+                <h2><?php esc_html_e( 'How Updates Work', 'wp-zabbix-monitor' ); ?></h2>
+                <ol style="margin-left: 20px; line-height: 1.8;">
+                    <li><?php esc_html_e( 'WordPress checks GitHub for new releases every 12 hours', 'wp-zabbix-monitor' ); ?></li>
+                    <li><?php esc_html_e( 'If a new version is available, an "Update Available" badge appears in the Plugins page', 'wp-zabbix-monitor' ); ?></li>
+                    <li><?php esc_html_e( 'Click "Update Now" to download and install the update', 'wp-zabbix-monitor' ); ?></li>
+                    <li><?php esc_html_e( 'WordPress automatically backs up your site before updating', 'wp-zabbix-monitor' ); ?></li>
+                    <li><?php esc_html_e( 'If the update fails, WordPress can roll back to the previous version', 'wp-zabbix-monitor' ); ?></li>
+                </ol>
+            </div>
+
+            <div class="wpzm-card">
+                <h2><?php esc_html_e( 'Release Information', 'wp-zabbix-monitor' ); ?></h2>
+                <p class="description"><?php esc_html_e( 'View the changelog and release notes on GitHub:', 'wp-zabbix-monitor' ); ?></p>
+                <p>
+                    <a href="https://github.com/QnEZ/wp-zabbix-monitor/releases" class="button" target="_blank" rel="noopener">
+                        <?php esc_html_e( 'View All Releases', 'wp-zabbix-monitor' ); ?>
+                    </a>
+                </p>
+            </div>
+        </div><!-- /updates tab -->
+
+        <!-- ── Tab: Auto-Provisionvision (outside form — uses AJAX only) ──────────── -->
     <div id="wpzm-tab-provision" class="wpzm-tab-content">
 
         <?php
