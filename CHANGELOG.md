@@ -2,6 +2,30 @@
 
 All notable changes to WP Zabbix Monitor will be documented in this file.
 
+## [1.4.0] - 2026-03-27
+
+### Added
+- **WordPress Native Auto-Updater**: Plugin now checks GitHub releases automatically every 12 hours
+  - Updates displayed in WordPress Plugins page with "Update Available" badge
+  - One-click installation with automatic backup and rollback support
+  - Seamless integration with WordPress update system
+  - Update information modal shows changelog and release notes
+
+### Features
+- New WPZM_Updater class handles GitHub API integration
+- Transient caching (12 hours) to reduce API calls
+- Automatic version comparison and update detection
+- Updates tab in plugin settings with status and information
+- Direct link to GitHub releases for manual review
+
+### Technical Details
+- Filters: `pre_set_site_transient_update_plugins`, `plugins_api`, `upgrader_post_install`
+- GitHub API endpoint: `https://api.github.com/repos/QnEZ/wp-zabbix-monitor/releases/latest`
+- Cache key: `wpzm_update_check` (12-hour TTL)
+- Supports ZIP downloads from GitHub releases or archive fallback
+
+---
+
 ## [1.3.2] - 2026-03-26
 
 ### Fixed
